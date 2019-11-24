@@ -1,0 +1,7 @@
+# frontend用
+frontend/dist
+frontend/node_modules
+
+# rails用
+.bundle
+api/src/vendor/bundle
