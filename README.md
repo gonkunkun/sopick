@@ -3,7 +3,7 @@
 ## Setup
 
 ```
-$ cp .env.default .env && cp api/src/.env.default api/src/.env
+$ cp frontend/src/.env.default frontend/src/.env && cp .env.default .env && cp api/src/.env.default api/src/.env
 $ docker-compose build
 $ docker-compose run --rm api bundle install
 $ docker-compose up

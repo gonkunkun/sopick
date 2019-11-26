@@ -1,0 +1,35 @@
+{
+  "name": "nuxt-blog-service",
+  "version": "1.0.0",
+  "description": "My supreme Nuxt.js project",
+  "author": "gonkunkun",
+  "private": true,
+  "scripts": {
+    "dev": "PORT=3333 nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "lintfix": "eslint --fix --ext .js,.vue --ignore-path .gitignore .",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/dotenv": "^1.4.1",
+    "babel-eslint": "^10.0.3",
+    "element-ui": "^2.4.11",
+    "eslint": "^6.7.0",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-loader": "^3.0.2",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-vue": "^6.0.1",
+    "lodash.clonedeep": "^4.5.0",
+    "moment": "^2.24.0",
+    "nuxt": "^2.10.2",
+    "prettier": "^1.19.1",
+    "universal-cookie": "^4.0.2"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0"
+  }
+}
