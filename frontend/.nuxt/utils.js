@@ -129,11 +129,11 @@ export async function setContext (app, context) {
       isDev: true,
       isHMR: false,
       app,
-      store: app.store,
+
       payload: context.payload,
       error: context.error,
       base: '/',
-      env: {"BASE_URL":"http://localhost:3031"}
+      env: {}
     }
     // Only set once
     if (context.req) {
