@@ -25,6 +25,9 @@ gem "active_model_serializers", "~> 0.10.0"
 gem "jwt"
 gem "aws-sdk-cognitoidentityprovider"
 
+# スクレイピング用
+gem "mechanize"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   # pry-byebugを用いるためコメントアウト
