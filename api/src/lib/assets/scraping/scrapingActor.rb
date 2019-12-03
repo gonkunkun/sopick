@@ -14,9 +14,13 @@ class Assets::Scraping::ScrapingActor
 
     # TODO: 店舗に在籍している女優リストを作成する
     brothelActors = generateBrothelActors("https://www.cityheaven.net/hokkaido/A0101/A010103/mikado/girllist/")
+    brothelActors.each do |element|
+      puts element[:href]
+    end
     return
 
     # TODO: 写メ日記に掲載されている画像URLリストを作成する
+    # TODO: 女優分ループする処理にする
     actorImageURLs = generateActorImageURLs("https://www.cityheaven.net/hokkaido/A0101/A010103/mikado/girlid-21635734/diary/")
     actorImageURLs.each do |element|
       puts element[:src]
@@ -30,11 +34,15 @@ class Assets::Scraping::ScrapingActor
   end
 
 
-  # 女優の写メ日記配下に保存されている画像のURLのリストを返却する関数
+  # 店舗に在籍する女優の一覧を取得して、返却する関数
   # [params]
-  # url       : お店のトップページ
+  # url          : お店のトップページ
+  # [return]
+  # actorsURLsAll: 店に在籍する女優のリスト（Nokogiri::XML::Element） 
   def generateBrothelActors(url)
     actorsPage = @mecanizeAgent.get(url)
+    # 女優リストを格納する変数
+    actorsURLsAll = []
     pagesLinks = actorsPage.search("div.contensboxin ul.paging center a")
 
     # ページングがコンテンツ上部と下部に存在するため、割る2している
@@ -45,17 +53,10 @@ class Assets::Scraping::ScrapingActor
       # 女優の数分、処理を回す
       actorsURLs = actorsPage.search("ul.girllist li div.girllistimg a")
       actorsURLs.each do |actorsURL|
-        puts actorsURL[:href]
+        actorsURLsAll.push(actorsURL)
       end
     end
-    # loop do
-    #   puts "test"
-    #   break if !pagesCount[0].text == "次の女の子へ"
-    # end
-    # puts pagesCount[0].text
-    # next if !pagesCount[0][:href].text == "次の女の子へ"
-    # exit
-
+    return actorsURLsAll
   end
 
 
@@ -68,7 +69,6 @@ class Assets::Scraping::ScrapingActor
     actorPage = @mecanizeAgent.get(url)
     # 女優の写メリストを格納する変数
     imgURLsAll = []
-
     # 日記が投稿されている月数分、処理を回す
     diaryURLs = actorPage.search("div#diary_archives ul li a")
     diaryURLs.each do |elmURL|
