@@ -1,0 +1,76 @@
+@startuml
+
+/'
+  図の中で目立たせたいエンティティに着色するための
+  色の名前（定数）を定義します。
+'/
+!define MAIN_ENTITY #E2EFDA-C6E0B4
+!define MAIN_ENTITY_2 #FCE4D6-F8CBAD
+
+/' 他の色も、用途が分りやすいように名前をつけます。 '/
+!define METAL #F2F2F2-D9D9D9
+!define MASTER_MARK_COLOR AAFFAA
+!define TRANSACTION_MARK_COLOR FFAA00
+
+/'
+  デフォルトのスタイルを設定します。
+  この場合の指定は class です。entity ではエラーになります。
+'/
+skinparam class {
+    BackgroundColor METAL
+    BorderColor Black
+    ArrowColor Black
+}
+
+package "ソーピックシステム" as target_system {
+    /'
+      マスターテーブルを M、トランザクションを T などと安直にしていますが、
+      チーム内でルールを決めればなんでも良いと思います。交差テーブルは "I" とか。
+      角丸四角形が描けない代替です。
+      １文字なら "主" とか "従" とか日本語でも OK だったのが受ける。
+     '/
+    entity "actors" as actors <<E,TRANSACTION_MARK_COLOR>> MAIN_ENTITY {
+        + actor_id（ID） [PK]
+        --
+        + brothel_id（店舗番号） [FK]
+        + image_id（写メ日記ID） [PK]
+        girlid（シティヘブンガールズID）
+        name（名前）
+        age（年齢）
+        tall（身長）
+        bust（カップ数）
+        waist（ウエスト）
+        hip（ヒップ）
+        actor_page_url（紹介ページ）
+        is_delete（削除済フラグ）
+        created_at
+        updated_at
+    }
+
+    entity "actor_images" as actor_images <<E, TRANSACTION_MARK_COLOR>> MAIN_ENTITY {
+        + image_id（写メ日記ID） [PK]
+        + actor_id（ID） [FK]
+        --
+        image_url（写メへのURL）
+        image_path（写メへのパス）
+        created_at
+        updated_at
+    }
+
+    entity "brothels" as brothels <<E, TRANSACTION_MARK_COLOR>> MAIN_ENTITY_2 {
+        + brothel_id（店舗番号）   [PK]
+        --
+        brothel_name（店舗名）
+        brothel_url（店舗HP）
+        area（店舗所在地）
+        is_delete
+        created_at
+        updated_at
+    }
+}
+
+actors          }|-ri-     brothels
+actors          -ri-|{     actor_images
+
+@enduml
+
