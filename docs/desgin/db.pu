@@ -23,17 +23,12 @@ skinparam class {
 }
 
 package "ソーピックシステム" as target_system {
-    /'
-      マスターテーブルを M、トランザクションを T などと安直にしていますが、
-      チーム内でルールを決めればなんでも良いと思います。交差テーブルは "I" とか。
-      角丸四角形が描けない代替です。
-      １文字なら "主" とか "従" とか日本語でも OK だったのが受ける。
-     '/
     entity "actors" as actors <<E,TRANSACTION_MARK_COLOR>> MAIN_ENTITY {
         + actor_id（ID） [PK]
         --
         + brothel_id（店舗番号） [FK]
-        + image_id（写メ日記ID） [PK]
+        + image_id（写メ日記ID） [FK]
+        service_id（店舗種別ID）
         girlid（シティヘブンガールズID）
         name（名前）
         age（年齢）
@@ -62,7 +57,7 @@ package "ソーピックシステム" as target_system {
         --
         brothel_name（店舗名）
         brothel_url（店舗HP）
-        area（店舗所在地）
+        prefecture（店舗所在地）
         is_delete
         created_at
         updated_at

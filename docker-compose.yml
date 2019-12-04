@@ -12,6 +12,7 @@ services:
       - bundle:/bundle:delegated
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_HOST: db
     ports:
       - 3031:3000
     depends_on:
@@ -39,3 +40,4 @@ services:
 
 volumes:
   bundle:
+    driver: local
