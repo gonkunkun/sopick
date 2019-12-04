@@ -15,8 +15,8 @@ ActiveRecord::Schema.define(version: 2019_12_04_154333) do
   create_table "actor_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "image_url"
     t.string "image_path"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
     t.bigint "actor_id"
     t.index ["actor_id"], name: "index_actor_images_on_actor_id"
   end
@@ -32,8 +32,8 @@ ActiveRecord::Schema.define(version: 2019_12_04_154333) do
     t.string "hip"
     t.string "actor_page_url"
     t.boolean "is_delete"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
     t.bigint "brothel_id"
     t.index ["brothel_id"], name: "index_actors_on_brothel_id"
   end
@@ -42,9 +42,9 @@ ActiveRecord::Schema.define(version: 2019_12_04_154333) do
     t.string "brothel_name"
     t.string "brothel_url"
     t.string "prefecture"
-    t.boolean "is_delete"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "is_delete", default: false
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
   end
 
   create_table "user_news_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

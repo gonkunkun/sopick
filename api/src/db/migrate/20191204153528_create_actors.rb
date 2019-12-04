@@ -11,7 +11,8 @@ class CreateActors < ActiveRecord::Migration[6.0]
       t.string   :hip
       t.string   :actor_page_url
       t.boolean  :is_delete
-      t.timestamps
+      t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
+      t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
 
       t.references :brothel, foreign_key: true
     end

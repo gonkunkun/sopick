@@ -49,7 +49,12 @@ class Assets::Scraping::ScrapingActor
     # 店舗一覧を取得
     brothelURLs = heavenPage.search("div.table-cell a.shop_title_shop")
     brothelURLs.each do |brothel|
+      # 店舗情報を取得
       brothelURLsAll.push(brothel)
+      # brothelsテーブルに値を格納する
+      Brothel.upsert(
+        {brothel_name: "test", brothel_url: "http://test.com", prefecture: "hokkaido"}
+      )
     end
 
     return brothelURLsAll
