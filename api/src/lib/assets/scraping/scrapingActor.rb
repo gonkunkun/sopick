@@ -9,15 +9,20 @@ class Assets::Scraping::ScrapingActor
   def exec
     actorId = 21635734
 
+    # TODO: 店舗エリア設定
+    prefecture = "hokkaido"
+
     # TODO: 店舗リストを取得する
-    brothels = generateBrothels()
+    brothels = generateBrothels(prefecture)
+    brothels.each do |element|
+      puts element[:href]
+    end
 
     # TODO: 店舗に在籍している女優リストを作成する
     brothelActors = generateBrothelActors("https://www.cityheaven.net/hokkaido/A0101/A010103/mikado/girllist/")
     brothelActors.each do |element|
       puts element[:href]
     end
-    return
 
     # TODO: 写メ日記に掲載されている画像URLリストを作成する
     # TODO: 女優分ループする処理にする
@@ -30,7 +35,24 @@ class Assets::Scraping::ScrapingActor
     upsertActorImageURLs()
   end
 
-  def generateBrothels()
+
+  # 店舗に在籍する女優の一覧を取得して、返却する関数
+  # [params]
+  # prefecture       : 店舗情報を取得する県
+  # [return]
+  # none: （Nokogiri::XML::Element） 
+  def generateBrothels(prefecture)
+    url = "https://www.cityheaven.net/#{prefecture}/A0101/A010103/shop-list/biz4/"
+    heavenPage = @mecanizeAgent.get(url)
+    brothelURLsAll = []
+
+    # 店舗一覧を取得
+    brothelURLs = heavenPage.search("div.table-cell a.shop_title_shop")
+    brothelURLs.each do |brothel|
+      brothelURLsAll.push(brothel)
+    end
+
+    return brothelURLsAll
   end
 
 

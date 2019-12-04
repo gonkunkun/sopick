@@ -1,0 +1,2 @@
+class Brothel < ApplicationRecord
+end

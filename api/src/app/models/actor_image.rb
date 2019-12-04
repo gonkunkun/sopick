@@ -1,0 +1,2 @@
+class ActorImage < ApplicationRecord
+end
