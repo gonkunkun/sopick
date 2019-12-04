@@ -10,16 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_03_155146) do
+ActiveRecord::Schema.define(version: 2019_12_04_154333) do
 
   create_table "actor_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "image_url"
+    t.string "image_path"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "actor_id"
+    t.index ["actor_id"], name: "index_actor_images_on_actor_id"
   end
 
   create_table "actors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "service_id"
+    t.string "girl_id"
+    t.string "name"
+    t.integer "age"
+    t.integer "tall"
+    t.string "bust"
+    t.integer "waist"
+    t.string "hip"
+    t.string "actor_page_url"
+    t.boolean "is_delete"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "brothel_id"
+    t.index ["brothel_id"], name: "index_actors_on_brothel_id"
   end
 
   create_table "brothels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -57,6 +73,8 @@ ActiveRecord::Schema.define(version: 2019_12_03_155146) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "actor_images", "actors"
+  add_foreign_key "actors", "brothels"
   add_foreign_key "user_news_categories", "users"
   add_foreign_key "user_profiles", "users"
 end
