@@ -9,7 +9,8 @@ class CreateActors < ActiveRecord::Migration[6.0]
       t.string   :name
       t.integer  :age
       t.integer  :tall
-      t.string   :bust
+      t.integer  :bust
+      t.string   :cup
       t.integer  :waist
       t.string   :hip
       t.string   :actor_page_url

@@ -3,5 +3,5 @@ class Actor < ApplicationRecord
   has_many :actor_images
 
   # HACK: actor_idをユニークキーから外す
-  validates :actor_id, uniqueness: { scope: [:name, :brothel_id] }
+  validates :name, uniqueness: { scope: [:brothel_id] }
 end

@@ -29,7 +29,8 @@ ActiveRecord::Schema.define(version: 2019_12_04_154333) do
     t.string "name"
     t.integer "age"
     t.integer "tall"
-    t.string "bust"
+    t.integer "bust"
+    t.string "cup"
     t.integer "waist"
     t.string "hip"
     t.string "actor_page_url"
@@ -42,8 +43,14 @@ ActiveRecord::Schema.define(version: 2019_12_04_154333) do
 
   create_table "brothels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "brothel_name"
+    t.string "brothel_name_en"
     t.string "brothel_url"
     t.string "prefecture"
+    t.string "prefecture_en"
+    t.string "area_id"
+    t.string "area_detail_id"
+    t.string "brothel_type_id"
+    t.string "brothel_type_name"
     t.boolean "is_delete", default: false
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }

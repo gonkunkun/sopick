@@ -5,6 +5,7 @@ default: &default
   username: root
   password: <%= ENV['MYSQL_ROOT_PASSWORD'] %>
   host: <%= ENV.fetch('MYSQL_HOST') { "" } %>
+  # host: db
 
 development:
   <<: *default
