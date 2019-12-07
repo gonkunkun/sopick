@@ -13,15 +13,17 @@
 ActiveRecord::Schema.define(version: 2019_12_04_154333) do
 
   create_table "actor_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "actor_id"
     t.string "image_url"
     t.string "image_path"
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
-    t.bigint "actor_id"
+    t.index ["actor_id", "image_url", "image_path"], name: "index_actor_images_on_actor_id_and_image_url_and_image_path", unique: true
     t.index ["actor_id"], name: "index_actor_images_on_actor_id"
   end
 
   create_table "actors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "brothel_id"
     t.string "service_id"
     t.string "girl_id"
     t.string "name"
@@ -34,8 +36,8 @@ ActiveRecord::Schema.define(version: 2019_12_04_154333) do
     t.boolean "is_delete"
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
-    t.bigint "brothel_id"
     t.index ["brothel_id"], name: "index_actors_on_brothel_id"
+    t.index ["name", "brothel_id"], name: "index_actors_on_name_and_brothel_id", unique: true
   end
 
   create_table "brothels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -45,6 +47,7 @@ ActiveRecord::Schema.define(version: 2019_12_04_154333) do
     t.boolean "is_delete", default: false
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.index ["brothel_name", "prefecture"], name: "index_brothels_on_brothel_name_and_prefecture", unique: true
   end
 
   create_table "user_news_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -73,8 +76,6 @@ ActiveRecord::Schema.define(version: 2019_12_04_154333) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "actor_images", "actors"
-  add_foreign_key "actors", "brothels"
   add_foreign_key "user_news_categories", "users"
   add_foreign_key "user_profiles", "users"
 end

@@ -1,6 +1,9 @@
 class CreateActors < ActiveRecord::Migration[6.0]
-  def change
+  def up
     create_table :actors do |t|
+      # TODO: 外部キーを張る
+      t.references :brothel, index: true
+
       t.string   :service_id
       t.string   :girl_id
       t.string   :name
@@ -13,8 +16,11 @@ class CreateActors < ActiveRecord::Migration[6.0]
       t.boolean  :is_delete
       t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
       t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
-
-      t.references :brothel, foreign_key: true
     end
+    add_index :actors, [:name, :brothel_id], unique: true
+  end
+
+  def down
+    drop_table :actors
   end
 end
