@@ -28,6 +28,9 @@ gem "aws-sdk-cognitoidentityprovider"
 # スクレイピング用
 gem "mechanize"
 
+# コーディング効率化
+gem "solargraph"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   # pry-byebugを用いるためコメントアウト
