@@ -50,6 +50,8 @@ GEM
     activerecord (6.0.0)
       activemodel (= 6.0.0)
       activesupport (= 6.0.0)
+    activerecord-import (1.0.3)
+      activerecord (>= 3.2)
     activestorage (6.0.0)
       actionpack (= 6.0.0)
       activejob (= 6.0.0)
@@ -270,6 +272,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers (~> 0.10.0)
+  activerecord-import
   aws-sdk-cognitoidentityprovider
   bootsnap (>= 1.4.2)
   dotenv-rails

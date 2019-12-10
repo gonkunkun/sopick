@@ -56,8 +56,14 @@ package "ソーピックシステム" as target_system {
         + brothel_id（店舗番号）   [PK]
         --
         brothel_name（店舗名）
+        brothel_name_en（店舗名 英語）
         brothel_url（店舗HP）
         prefecture（店舗所在地）
+        prefecture_en（店舗所在地 英語）
+        area_id（エリア番号）
+        area_detail_id（エリア詳細番号）
+        brothel_type_id（店舗種別）
+        brothel_type_name（店舗種別名）
         is_delete
         created_at
         updated_at

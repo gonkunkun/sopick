@@ -1,15 +1,13 @@
 require "mechanize"
+require "activerecord-import"
 
 class Assets::Scraping::ScrapingActor
   def initialize
     @mecanizeAgent = Mechanize.new
     # @mecanizeAgent.user_agent_alias = "Windows Mozilla"
-    # @mecanizeAgent.ca_file = "../../cacert.pem"
   end
 
   def exec
-    actorId = 21635734
-
     # TODO: 店舗エリア設定
     prefecture = "hokkaido"
 
@@ -31,8 +29,9 @@ class Assets::Scraping::ScrapingActor
       })
 
       # 店舗に在籍している女優リストを作成する
-      # brothelActors = generateBrothelActors("#{elementBrothel[:brothel_url]}girllist/")
-      brothelActors = generateBrothelActors("https://www.cityheaven.net/hokkaido/A0101/A010103/mikado/girllist/")
+      brothelActors = generateBrothelActors("#{elementBrothel[:brothel_url]}girllist/")
+      # brothelActors = generateBrothelActors("https://www.cityheaven.net/hokkaido/A0101/A010103/mikado/girllist/")
+      newActors = []
       brothelActors.each do |elementActor|
         brothel = Brothel.find_by(
           brothel_name:  elementBrothel[:brothel_name],
@@ -40,7 +39,7 @@ class Assets::Scraping::ScrapingActor
         )
 
         puts elementActor[:name]
-        Actor.upsert({
+        newActors << Actor.new(
           brothel_id:       brothel[:id],
           girl_id:          elementActor[:girl_id],
           name:             elementActor[:name],
@@ -51,8 +50,9 @@ class Assets::Scraping::ScrapingActor
           waist:            elementActor[:waist],
           hip:              elementActor[:hip],
           actor_page_url:   elementActor[:actor_page_url]
-        })
+        )
       end
+      Actor.import newActors, on_duplicate_key_update: [:actor_page_url]
 
       # 写メ日記に掲載されている画像URLリストを作成する
       brothel = Brothel.find_by(
@@ -62,15 +62,25 @@ class Assets::Scraping::ScrapingActor
       actors = Actor.where(brothel_id: brothel[:id])
 
       actors.each do |actor|
+        newActorImages = []
         puts actor[:name]
         url = "https://www.cityheaven.net/#{brothel[:prefecture_en]}/#{brothel[:area_id]}/#{brothel[:area_detail_id]}/#{brothel[:brothel_name_en]}/girlid-#{actor[:girl_id]}/diary/"
         actorImages = generateActorImageURLs(url)
+
+        # 写メ日記画像が存在しない場合には、写メ日記存在フラグをfalseに更新して、次のループ処理を実行
+        if actorImages.length == 0
+          actor.is_exist_diary = false
+          actor.save
+          next
+        end
+
         actorImages.each do |elementActorImages|
-          ActorImage.upsert({
+          newActorImages << ActorImage.new(
             actor_id:    actor[:id],
             image_path:  elementActorImages[:image_path]
-          })
+          )
         end
+        ActorImage.import newActorImages, on_duplicate_key_update: [:image_path]
       end
     end
   end
@@ -82,6 +92,7 @@ class Assets::Scraping::ScrapingActor
   # [return]
   # none: （Nokogiri::XML::Element） 
   def generateBrothels(prefecture)
+    # TODO: エリア番号設定
     url = "https://www.cityheaven.net/#{prefecture}/A0101/A010103/shop-list/biz4/"
     heavenPage = @mecanizeAgent.get(url)
     brothels = []
@@ -181,6 +192,7 @@ class Assets::Scraping::ScrapingActor
       actorPage = @mecanizeAgent.get(url)
       
       # 日記が投稿されている月数分、処理を回す
+      # TODO: 同月の中で複数ページ存在する場合のループ処理を追加
       diaryURLs = actorPage.search("div#diary_archives ul li a")
       diaryURLs.each do |elmURL|
         # href要素を持たないelementを除外

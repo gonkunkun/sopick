@@ -2,7 +2,7 @@ FROM ruby:2.6.4-alpine
 
 RUN apk update && \
     apk add --update nodejs nodejs-npm && \
-    apk add --no-cache bash tzdata libxml2-dev curl-dev make gcc libc-dev g++ mariadb-dev mysql-client
+    apk add --no-cache bash tzdata libxml2-dev curl-dev make gcc libc-dev g++ mariadb-dev mysql-client less
 
 ENV BUNDLE_PATH=/bundle
 
