@@ -85,6 +85,61 @@ class Assets::Scraping::ScrapingActor
     end
   end
 
+  
+  # シティヘブンネットに登録されている47都道府県のリンクリストを取得する関数
+  # [return]
+  # object
+  # - name    : 県名
+  # - name_en : 県名（アルファベット）
+  # - href    : リンク先
+  def generatePrefectures()
+    url = "https://www.cityheaven.net"
+    heavenPage = @mecanizeAgent.get(url)
+    prefectures = []
+
+    prefecturePages = heavenPage.search("dl dd")
+    prefecturePages.each do |prefecturePage|
+      prefecture = {}
+      anker = prefecturePage.search("a")
+
+      prefecture[:href]    = "#{url}#{anker[0][:href]}"
+      prefecture[:name]    = anker[0].text
+      prefecture[:name_en] = anker[0][:href].gsub(/\//, "")
+
+      # お店が存在しない場合には、hrefに javascript:void(0) が指定されているため、このデータを除外する
+      if prefecture[:name_en] != "javascript:void(0)"
+        prefectures.push(prefecture)
+      end
+    end
+    return prefectures
+  end
+
+
+  # エリア番号を取得して返却する関数
+  # [params]
+  # prefecture       : 県
+  # [return]
+  # areas
+  # - prefecture    : 県名
+  # - prefecture_en : 県名（アルファベット）
+  # - href          : エリア番号（リンク先）
+  def generateAreaID(prefecture)
+    url = "https://www.cityheaven.net/#{prefecture}"
+    heavenPage = @mecanizeAgent.get(url)
+    areas = []
+
+    areaPages = heavenPage.search("map area")
+    areaPages.each do |areaPage|
+      area = {}
+      area[:prefecture]    = areaPage[:alt]
+      area[:prefecture_en] = areaPage[:region]
+      area[:href]          = areaPage[:href]
+      areas.push(area)
+    end
+    return areas
+  end
+
+  # 業種に対応する "biz"番号を返却する
 
   # 店舗一覧を取得して、返却する関数
   # [params]
@@ -92,7 +147,7 @@ class Assets::Scraping::ScrapingActor
   # [return]
   # none: （Nokogiri::XML::Element） 
   def generateBrothels(prefecture)
-    # TODO: エリア番号設定
+    # TODO: エリア番号設定, 業種指定
     url = "https://www.cityheaven.net/#{prefecture}/A0101/A010103/shop-list/biz4/"
     heavenPage = @mecanizeAgent.get(url)
     brothels = []
