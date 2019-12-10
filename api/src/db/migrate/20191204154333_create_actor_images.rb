@@ -4,13 +4,12 @@ class CreateActorImages < ActiveRecord::Migration[6.0]
       # TODO: 外部キーを張る
       t.references :actor, index: true
 
-      t.string   :image_url
       t.string   :image_path
       t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
       t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
     end
 
-    add_index :actor_images, [:actor_id, :image_url, :image_path], unique: true
+    add_index :actor_images, [:actor_id, :image_path], unique: true
   end
 
   def down

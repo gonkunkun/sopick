@@ -16,6 +16,7 @@ class Assets::Scraping::ScrapingActor
     # 店舗リストを取得する
     brothels = generateBrothels(prefecture)
     brothels.each do |elementBrothel|
+      puts elementBrothel[:brothel_name]
       # brothelsテーブルに値を格納する
       Brothel.upsert({
         brothel_name:      elementBrothel[:brothel_name],
@@ -30,13 +31,15 @@ class Assets::Scraping::ScrapingActor
       })
 
       # 店舗に在籍している女優リストを作成する
-      brothelActors = generateBrothelActors("#{elementBrothel[:brothel_url]}girllist/")
+      # brothelActors = generateBrothelActors("#{elementBrothel[:brothel_url]}girllist/")
+      brothelActors = generateBrothelActors("https://www.cityheaven.net/hokkaido/A0101/A010103/mikado/girllist/")
       brothelActors.each do |elementActor|
         brothel = Brothel.find_by(
           brothel_name:  elementBrothel[:brothel_name],
           prefecture_en: elementBrothel[:prefecture_en]
         )
 
+        puts elementActor[:name]
         Actor.upsert({
           brothel_id:       brothel[:id],
           girl_id:          elementActor[:girl_id],
@@ -51,15 +54,24 @@ class Assets::Scraping::ScrapingActor
         })
       end
 
-      # TODO: 写メ日記に掲載されている画像URLリストを作成する
-      # TODO: 女優分ループする処理にする
-      actorImageURLs = generateActorImageURLs("https://www.cityheaven.net/hokkaido/A0101/A010103/mikado/girlid-21635734/diary/")
-      actorImageURLs.each do |element|
-        # puts element[:src]
-      end
+      # 写メ日記に掲載されている画像URLリストを作成する
+      brothel = Brothel.find_by(
+        brothel_name:  elementBrothel[:brothel_name],
+        prefecture_en: elementBrothel[:prefecture_en]
+      )
+      actors = Actor.where(brothel_id: brothel[:id])
 
-      # TODO: 女優の画像URLリストをDBに登録する
-      upsertActorImageURLs()
+      actors.each do |actor|
+        puts actor[:name]
+        url = "https://www.cityheaven.net/#{brothel[:prefecture_en]}/#{brothel[:area_id]}/#{brothel[:area_detail_id]}/#{brothel[:brothel_name_en]}/girlid-#{actor[:girl_id]}/diary/"
+        actorImages = generateActorImageURLs(url)
+        actorImages.each do |elementActorImages|
+          ActorImage.upsert({
+            actor_id:    actor[:id],
+            image_path:  elementActorImages[:image_path]
+          })
+        end
+      end
     end
   end
 
@@ -108,7 +120,6 @@ class Assets::Scraping::ScrapingActor
   # [return]
   # actorsURLsAll: 店に在籍する女優のリスト（Nokogiri::XML::Element） 
   def generateBrothelActors(url)
-    puts url
 
     actorsPage = @mecanizeAgent.get(url)
     # 女優リストを格納する変数
@@ -129,24 +140,22 @@ class Assets::Scraping::ScrapingActor
         puts actorsURL[:href]
         actor = {}
 
-        girlsText = actorsURL.search("div.girllisttext").text().gsub("更新", "")
-        # ..歳よりも前の記述（名前部分）を削除
-        girlsText = girlsText.gsub(/(.*)(?=.{2}歳)/, "").gsub(/(\n)+/, "")
-        girlsText = girlsText.gsub(/(\t|\　|\ |･)+/, ":::").gsub(/(\n)+/, "")
-        textArray = girlsText.split(":::")
+        textArray = parseActorProfile(actorsURL.search("div.girllisttext").text())
 
         actor[:name]               = actorsURL.search("img")[0][:alt]
-        # FIXME: 年齢がインサートされない場合がある
-        actor[:age]                = textArray[1].gsub("歳", "")
-        actor[:tall]               = textArray[2].gsub("T", "")
-        actor[:bust]               = textArray[3]
-        actor[:cup]                = textArray[4].gsub(/\(|\)/, "")
-        actor[:waist]              = textArray[5]
-        actor[:hip]                = textArray[6]
         actor[:actor_page_url]     = "https://www.cityheaven.net#{actorsURL[:href]}"
         splitHref = actorsURL[:href].split("/")
         actor[:girl_id]            = splitHref[5].gsub("girlid-", "")
 
+        # プロフィール部分の取得漏れがある場合には、値の代入をスキップする
+        if textArray.length == 6
+          actor[:age]                = textArray[0].gsub("歳", "")
+          actor[:tall]               = textArray[1].gsub("T", "")
+          actor[:bust]               = textArray[2]
+          actor[:cup]                = textArray[3].gsub(/\(|\)/, "")
+          actor[:waist]              = textArray[4]
+          actor[:hip]                = textArray[5]
+        end
         actors.push(actor)
 
         # 次のページ　が存在する場合
@@ -155,7 +164,6 @@ class Assets::Scraping::ScrapingActor
         end
       end
     end
-
     return actors
   end
 
@@ -166,29 +174,51 @@ class Assets::Scraping::ScrapingActor
   # [return]
   # imgURLsAll: 写メ日記の画像URLのリスト（Nokogiri::XML::Element） 
   def generateActorImageURLs(url)
-    actorPage = @mecanizeAgent.get(url)
     # 女優の写メリストを格納する変数
     imgURLsAll = []
-    # 日記が投稿されている月数分、処理を回す
-    diaryURLs = actorPage.search("div#diary_archives ul li a")
-    diaryURLs.each do |elmURL|
-      # href要素を持たないelementを除外
-      next if !elmURL[:href]
 
-      # 各月の日記ページへのリンクをクリックし、ページ要素を取得
-      diaryPage = actorPage.link_with(href: elmURL[:href]).click
+    begin
+      actorPage = @mecanizeAgent.get(url)
+      
+      # 日記が投稿されている月数分、処理を回す
+      diaryURLs = actorPage.search("div#diary_archives ul li a")
+      diaryURLs.each do |elmURL|
+        # href要素を持たないelementを除外
+        next if !elmURL[:href]
+        # 各月の日記ページへのリンクをクリックし、ページ要素を取得
+        diaryPage = actorPage.link_with(href: elmURL[:href]).click
+        diaryItemPage = diaryPage.search("article.diary_item")
 
-      # 1月分の日記に登録されている画像のURL一覧を取得する
-      imgURLsOneMonth = diaryPage.search("article.diary_item div.diary_photoframe a img")
-      imgURLsOneMonth.each do |imgURL|
-        imgURLsAll.push(imgURL)
+        # 1月分の日記に登録されている画像のURL一覧を取得する
+        diaryItemPage = diaryPage.search("article.diary_item div.diary_photoframe a img")
+        diaryItemPage.each do |item|
+          actorImage = {}
+          imagePath = item[:src].gsub(/\?cache.*/, "")
+          actorImage[:image_path]      = "https:#{imagePath}"
+          imgURLsAll.push(actorImage) if actorImage.has_key?(:image_path)
+        end
       end
+    # 写メ日記が存在しない場合
+    rescue Mechanize::ResponseCodeError => e
+      puts e
+    # 写メ日記が存在しない場合
+    rescue NoMethodError => e
+      puts e
     end
+
     return imgURLsAll
   end
 
+  # 女優のプロフィールをパースして、年齢、スリーサイズ等を取得する関数
+  def parseActorProfile(string)
+    girlsText = string.gsub("更新", "")
+    # ..歳よりも前の記述（名前部分）を削除
+    girlsText = girlsText.gsub(/(.*)(?=.{2}歳)/, "").gsub(/(\n|\r)+/, "")
+    # 末尾の改行文字を削除する
+    girlsText = girlsText.gsub(/(\t|\　|\ |\n)+$/, "")
+    girlsText = girlsText.gsub(/(\t|\　|\ |･)+/, ":::").gsub(/(\n)+/, "")
+    actorProfile = girlsText.split(":::")
 
-  def upsertActorImageURLs()
+    return actorProfile
   end
-
 end

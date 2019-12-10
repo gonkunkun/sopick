@@ -14,11 +14,10 @@ ActiveRecord::Schema.define(version: 2019_12_04_154333) do
 
   create_table "actor_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "actor_id"
-    t.string "image_url"
     t.string "image_path"
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
-    t.index ["actor_id", "image_url", "image_path"], name: "index_actor_images_on_actor_id_and_image_url_and_image_path", unique: true
+    t.index ["actor_id", "image_path"], name: "index_actor_images_on_actor_id_and_image_path", unique: true
     t.index ["actor_id"], name: "index_actor_images_on_actor_id"
   end
 
