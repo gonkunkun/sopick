@@ -220,7 +220,6 @@ class Assets::Scraping::ScrapingActor
     actorsPage = @mecanizeAgent.get(url)
     # 女優リストを格納する変数
     actors = []
-    puts "test"
     pagesLinks = actorsPage.search("div.contensboxin ul.paging center a")
     # ページングがコンテンツ上部と下部に存在するため、割る2している。
     pagesCount = pagesLinks.length / 2
