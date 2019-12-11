@@ -60,6 +60,8 @@ package "ソーピックシステム" as target_system {
         brothel_url（店舗HP）
         prefecture（店舗所在地）
         prefecture_en（店舗所在地 英語）
+        area（地域名）
+        area_en（地域名 英語）
         area_id（エリア番号）
         area_detail_id（エリア詳細番号）
         brothel_type_id（店舗種別）

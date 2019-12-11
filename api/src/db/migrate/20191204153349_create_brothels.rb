@@ -6,6 +6,8 @@ class CreateBrothels < ActiveRecord::Migration[6.0]
       t.string   :brothel_url
       t.string   :prefecture
       t.string   :prefecture_en
+      t.string   :area
+      t.string   :area_en
       t.string   :area_id
       t.string   :area_detail_id
       t.string   :brothel_type_id

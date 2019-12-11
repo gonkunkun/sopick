@@ -7,12 +7,19 @@ class Assets::Scraping::ScrapingActor
     # @mecanizeAgent.user_agent_alias = "Windows Mozilla"
   end
 
-  def exec
-    # TODO: 店舗エリア設定
-    prefecture = "hokkaido"
+  # シティヘブンネットから指定された県、業種の店舗/在籍女優の写メ日記を取得する関数
+  # [params]
+  def scrapingActorsDiary(prefecture, service)
+    serviceType = {
+      "HEALTH"      => "biz1",
+      "SOAP"        => "biz4",
+      "HOTE_HEALTH" => "biz5",
+      "DELI_HEALTH" => "biz6",
+      "ESTE_AROMA"  => "biz7"
+    }
 
     # 店舗リストを取得する
-    brothels = generateBrothels(prefecture)
+    brothels = generateBrothels(prefecture, serviceType.fetch(service))
     brothels.each do |elementBrothel|
       puts elementBrothel[:brothel_name]
       # brothelsテーブルに値を格納する
@@ -22,6 +29,8 @@ class Assets::Scraping::ScrapingActor
         brothel_url:       elementBrothel[:brothel_url],
         prefecture:        elementBrothel[:prefecture],
         prefecture_en:     elementBrothel[:prefecture_en],
+        # area:              areaObject[:area],
+        # area_en:           areaObject[:area_en],
         area_id:           elementBrothel[:area_id],
         area_detail_id:    elementBrothel[:area_detail_id],
         brothel_type_id:   elementBrothel[:brothel_type_id],
@@ -111,7 +120,7 @@ class Assets::Scraping::ScrapingActor
         prefectures.push(prefecture)
       end
     end
-    return prefectures
+    return prefectures.uniq
   end
 
 
@@ -120,9 +129,10 @@ class Assets::Scraping::ScrapingActor
   # prefecture       : 県
   # [return]
   # areas
-  # - prefecture    : 県名
-  # - prefecture_en : 県名（アルファベット）
+  # - area    : 県名
+  # - area_en : 県名（アルファベット）
   # - href          : エリア番号（リンク先）
+  # TODO: エリア番号と地名のマッピングを作成(DB)
   def generateAreaID(prefecture)
     url = "https://www.cityheaven.net/#{prefecture}"
     heavenPage = @mecanizeAgent.get(url)
@@ -130,27 +140,48 @@ class Assets::Scraping::ScrapingActor
 
     areaPages = heavenPage.search("map area")
     areaPages.each do |areaPage|
-      area = {}
-      area[:prefecture]    = areaPage[:alt]
-      area[:prefecture_en] = areaPage[:region]
-      area[:href]          = areaPage[:href]
-      areas.push(area)
+      # エリアが更に細かく分かれる場合
+      # "/"の出現回数で判断（数で階層が分かるため）。うまく動かなかったら<area>タグの有無で判断する方針に切り替える
+      if areaPage[:href].count("\/") == 3
+        # 下の階層へ移動
+        areaDetailPages = heavenPage.link_with(href: areaPage[:href]).click
+        areaDetailPages = areaDetailPages.search("map area")
+        areaDetailPages.each do |areaDetailPage|
+          area = {}
+          area[:area]    = areaDetailPage[:alt]
+          area[:area_en] = areaDetailPage[:region]
+          area[:href]    = areaDetailPage[:href]
+          areas.push(area) if areaDetailPage[:href].count("\/") == 4
+        end
+      else
+        area = {}
+        # エリアが細かく別れていない場合
+        area[:area]    = areaPage[:alt]
+        area[:area_en] = areaPage[:region]
+        area[:href]    = areaPage[:href]
+        areas.push(area)
+      end
     end
-    return areas
+    return areas.uniq
   end
-
-  # 業種に対応する "biz"番号を返却する
 
   # 店舗一覧を取得して、返却する関数
   # [params]
-  # prefecture       : 店舗情報を取得する県
+  # areaID           : 店舗情報を取得する県・地域
+  # serviceType      : 店舗種別
   # [return]
   # none: （Nokogiri::XML::Element） 
-  def generateBrothels(prefecture)
-    # TODO: エリア番号設定, 業種指定
-    url = "https://www.cityheaven.net/#{prefecture}/A0101/A010103/shop-list/biz4/"
+  def generateBrothels(areaID, serviceType)
+    url = "https://www.cityheaven.net/#{areaID}/shop-list/#{serviceType}/"
     heavenPage = @mecanizeAgent.get(url)
+
     brothels = []
+    # 条件にヒットする店舗が存在しない場合、終了
+    return brothels if heavenPage.search("p span span.strong-nonetitle").text.present?
+
+    # 「もっと見る」の表示がなくなるまでスクロール
+    # FIXME: mechanizeでJSの動作はできないため、別の方法で対応する必要あり
+    # 参考：https://qiita.com/rinkun/items/cebd8e25aec13b6bb933
 
     # 店舗一覧を取得
     brothelURLs = heavenPage.search("div.table-cell a.shop_title_shop")
@@ -186,12 +217,11 @@ class Assets::Scraping::ScrapingActor
   # [return]
   # actorsURLsAll: 店に在籍する女優のリスト（Nokogiri::XML::Element） 
   def generateBrothelActors(url)
-
     actorsPage = @mecanizeAgent.get(url)
     # 女優リストを格納する変数
     actors = []
+    puts "test"
     pagesLinks = actorsPage.search("div.contensboxin ul.paging center a")
-
     # ページングがコンテンツ上部と下部に存在するため、割る2している。
     pagesCount = pagesLinks.length / 2
     # ページングが発生しない場合には1を入れる
@@ -201,9 +231,9 @@ class Assets::Scraping::ScrapingActor
     # お店のページング数分、処理を回す(「次の女の子へ」が表示されなくなるまでループ)
     1.upto pagesCount do |i|
       # 女優の数分、処理を回す
+      # aomoriのように古いページでは、タグの構造が異なるため対応不能
       actorsURLs = actorsPage.search("ul.girllist li div.girllistimg a")
       actorsURLs.each do |actorsURL|
-        puts actorsURL[:href]
         actor = {}
 
         textArray = parseActorProfile(actorsURL.search("div.girllisttext").text())
