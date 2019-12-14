@@ -1,5 +1,4 @@
 require "mechanize"
-require "activerecord-import"
 
 class Assets::Scraping::ScrapingActor
   def initialize
@@ -46,9 +45,8 @@ class Assets::Scraping::ScrapingActor
           brothel_name:  elementBrothel[:brothel_name],
           prefecture_en: elementBrothel[:prefecture_en]
         )
-
         puts elementActor[:name]
-        newActors << Actor.new(
+        newActors.push({
           brothel_id:       brothel[:id],
           girl_id:          elementActor[:girl_id],
           name:             elementActor[:name],
@@ -59,9 +57,10 @@ class Assets::Scraping::ScrapingActor
           waist:            elementActor[:waist],
           hip:              elementActor[:hip],
           actor_page_url:   elementActor[:actor_page_url]
-        )
+        })
+
       end
-      Actor.import newActors, on_duplicate_key_update: [:actor_page_url]
+      Actor.insert_all(newActors)
 
       # 写メ日記に掲載されている画像URLリストを作成する
       brothel = Brothel.find_by(
@@ -84,12 +83,12 @@ class Assets::Scraping::ScrapingActor
         end
 
         actorImages.each do |elementActorImages|
-          newActorImages << ActorImage.new(
+          newActorImages.push({
             actor_id:    actor[:id],
             image_path:  elementActorImages[:image_path]
-          )
+          })
         end
-        ActorImage.import newActorImages, on_duplicate_key_update: [:image_path]
+        ActorImage.insert_all(newActorImages)
       end
     end
   end
