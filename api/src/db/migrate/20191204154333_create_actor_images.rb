@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateActorImages < ActiveRecord::Migration[6.0]
   def up
     create_table :actor_images do |t|

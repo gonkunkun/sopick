@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Brothel < ApplicationRecord
   has_many :actors
 

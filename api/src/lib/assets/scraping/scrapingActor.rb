@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "mechanize"
 
 class Assets::Scraping::ScrapingActor
@@ -58,7 +60,6 @@ class Assets::Scraping::ScrapingActor
           hip:              elementActor[:hip],
           actor_page_url:   elementActor[:actor_page_url]
         })
-
       end
       Actor.insert_all(newActors)
 
@@ -93,14 +94,14 @@ class Assets::Scraping::ScrapingActor
     end
   end
 
-  
+
   # シティヘブンネットに登録されている47都道府県のリンクリストを取得する関数
   # [return]
   # object
   # - name    : 県名
   # - name_en : 県名（アルファベット）
   # - href    : リンク先
-  def generatePrefectures()
+  def generatePrefectures
     url = "https://www.cityheaven.net"
     heavenPage = @mecanizeAgent.get(url)
     prefectures = []
@@ -119,7 +120,7 @@ class Assets::Scraping::ScrapingActor
         prefectures.push(prefecture)
       end
     end
-    return prefectures.uniq
+    prefectures.uniq
   end
 
 
@@ -161,7 +162,7 @@ class Assets::Scraping::ScrapingActor
         areas.push(area)
       end
     end
-    return areas.uniq
+    areas.uniq
   end
 
   # 店舗一覧を取得して、返却する関数
@@ -169,7 +170,7 @@ class Assets::Scraping::ScrapingActor
   # areaID           : 店舗情報を取得する県・地域
   # serviceType      : 店舗種別
   # [return]
-  # none: （Nokogiri::XML::Element） 
+  # none: （Nokogiri::XML::Element）
   def generateBrothels(areaID, serviceType)
     url = "https://www.cityheaven.net/#{areaID}/shop-list/#{serviceType}/"
     heavenPage = @mecanizeAgent.get(url)
@@ -205,8 +206,8 @@ class Assets::Scraping::ScrapingActor
 
       brothels.push(brothel)
     end
-    
-    return brothels
+
+    brothels
   end
 
 
@@ -214,7 +215,7 @@ class Assets::Scraping::ScrapingActor
   # [params]
   # url          : お店のトップページ
   # [return]
-  # actorsURLsAll: 店に在籍する女優のリスト（Nokogiri::XML::Element） 
+  # actorsURLsAll: 店に在籍する女優のリスト（Nokogiri::XML::Element）
   def generateBrothelActors(url)
     actorsPage = @mecanizeAgent.get(url)
     # 女優リストを格納する変数
@@ -258,7 +259,7 @@ class Assets::Scraping::ScrapingActor
         end
       end
     end
-    return actors
+    actors
   end
 
 
@@ -266,14 +267,14 @@ class Assets::Scraping::ScrapingActor
   # [params]
   # url       : 写メ日記のトップページ
   # [return]
-  # imgURLsAll: 写メ日記の画像URLのリスト（Nokogiri::XML::Element） 
+  # imgURLsAll: 写メ日記の画像URLのリスト（Nokogiri::XML::Element）
   def generateActorImageURLs(url)
     # 女優の写メリストを格納する変数
     imgURLsAll = []
 
     begin
       actorPage = @mecanizeAgent.get(url)
-      
+
       # 日記が投稿されている月数分、処理を回す
       # TODO: 同月の中で複数ページ存在する場合のループ処理を追加
       diaryURLs = actorPage.search("div#diary_archives ul li a")
@@ -282,7 +283,6 @@ class Assets::Scraping::ScrapingActor
         next if !elmURL[:href]
         # 各月の日記ページへのリンクをクリックし、ページ要素を取得
         diaryPage = actorPage.link_with(href: elmURL[:href]).click
-        diaryItemPage = diaryPage.search("article.diary_item")
 
         # 1月分の日記に登録されている画像のURL一覧を取得する
         diaryItemPage = diaryPage.search("article.diary_item div.diary_photoframe a img")
@@ -301,7 +301,7 @@ class Assets::Scraping::ScrapingActor
       puts e
     end
 
-    return imgURLsAll
+    imgURLsAll
   end
 
   # 女優のプロフィールをパースして、年齢、スリーサイズ等を取得する関数
@@ -314,6 +314,6 @@ class Assets::Scraping::ScrapingActor
     girlsText = girlsText.gsub(/(\t|\　|\ |･)+/, ":::").gsub(/(\n)+/, "")
     actorProfile = girlsText.split(":::")
 
-    return actorProfile
+    actorProfile
   end
 end
