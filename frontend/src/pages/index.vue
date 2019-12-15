@@ -1,33 +1,26 @@
 <template>
-  <section class="container">
-    <el-card style="flex: 1">
-      <div slot="header" class="clearfix">
-        <span>ログイン</span>
-      </div>
+  <v-container fluid>
+    <v-row class="mx-auto d-flex flex-column">
       <form>
-        <div class="form-content">
-          <span>ユーザー ID</span>
-          <el-input placeholder="" />
-          <!-- <el-input v-model="formData.id" placeholder="" /> -->
+        <div class="my-4">
+          <v-text-field v-model="userId" label="ユーザID" />
         </div>
-        <div class="form-content">
-          <el-checkbox v-model="isCreateMode">
-            アカウントを作成する
-          </el-checkbox>
+        <div class="my-4">
+          <v-checkbox v-model="isCreateMode" :label="`アカウントを作成する`" />
         </div>
-        <div class="form-content">
-          <el-button type="primary" @click="healthcheck">
+        <div class="my-4">
+          <v-btn color="primary" @click="healthcheck">
             ヘルスチェック
-          </el-button>
+          </v-btn>
         </div>
-        <div class="text-right">
-          <el-button type="primary" @click="handleClickSubmit">
+        <div class="my-4">
+          <v-btn color="primary" @click="handleClickSubmit">
             {{ buttonText }}
-          </el-button>
+          </v-btn>
         </div>
       </form>
-    </el-card>
-  </section>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
