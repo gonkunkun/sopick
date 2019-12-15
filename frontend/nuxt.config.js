@@ -26,15 +26,24 @@ export default {
   /*
    ** Global CSS
    */
-  css: ["element-ui/lib/theme-chalk/index.css"],
+  css: [
+    // "element-ui/lib/theme-chalk/index.css"
+  ],
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ["@/plugins/element-ui", "@/plugins/axios/index"],
+  plugins: [
+    // "@/plugins/element-ui",
+    "@/plugins/vuetify",
+    "@/plugins/axios/index"
+  ],
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: [],
+  buildModules: ["@nuxtjs/vuetify"],
+  vuetify: {
+    /* module options */
+  },
   /*
    ** Nuxt.js modules
    */
@@ -42,7 +51,8 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     "@nuxtjs/axios",
     "@nuxtjs/dotenv",
-    "@nuxtjs/proxy"
+    "@nuxtjs/proxy",
+    "@nuxtjs/vuetify"
   ],
   env: {
     BASE_URL: process.env.API_URL
@@ -61,7 +71,10 @@ export default {
    ** Build configuration
    */
   build: {
-    transpile: [/^element-ui/],
+    transpile: [
+      // /^element-ui/,
+      "vuetify/lib"
+    ],
     /*
      ** You can extend webpack config here
      */
@@ -73,8 +86,8 @@ export default {
           test: /\.(js|vue)$/,
           loader: "eslint-loader",
           exclude: /(node_modules)/
-        });
+        })
       }
     }
   }
-};
+}

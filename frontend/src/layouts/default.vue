@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <v-app>
     <TheHeader />
-    <div class="wrapper">
-      <nuxt class="container" />
-    </div>
-  </div>
+    <v-content>
+      <nuxt />
+    </v-content>
+  </v-app>
 </template>
 
 <script>

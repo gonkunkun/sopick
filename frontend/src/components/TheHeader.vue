@@ -1,33 +1,35 @@
 <template>
-  <el-menu mode="horizontal" :router="true">
-    <el-menu-item index="1" style="pointer-events:none;">
-      Nuxt Diary App
-    </el-menu-item>
-    <el-menu-item index="2" :route="{ path: '/posts/' }">
-      投稿一覧
-    </el-menu-item>
-
-    <no-ssr>
-      <el-menu-item
-        v-if="user"
-        index="4"
-        style="float: right;"
-        :route="{ path: `/users/${user.id}` }"
-      >
-        <span>{{ user.id }}</span>
-      </el-menu-item>
-      <el-menu-item index="4" style="float: right;" :route="{ path: '/' }">
-        <span>ログイン</span>
-      </el-menu-item>
-    </no-ssr>
-    <el-menu-item
-      index="5"
-      style="float: right"
-      :route="{ path: '/posts/new' }"
+  <div>
+    <v-toolbar
+      dark
+      prominent
+      src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
     >
-      新規投稿
-    </el-menu-item>
-  </el-menu>
+      <v-app-bar-nav-icon />
+      <v-toolbar-title>Sopick</v-toolbar-title>
+      <v-spacer />
+      <v-btn icon>
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+      <v-btn icon>
+        <v-icon>mdi-heart</v-icon>
+      </v-btn>
+      <v-btn text :route="{ path: '/posts/new' }">
+        新規投稿
+      </v-btn>
+      <v-btn text :route="{ path: '/posts/' }">
+        投稿一覧
+      </v-btn>
+      <no-ssr>
+        <v-btn v-if="user" text :route="{ path: `/users/${user.id}` }">
+          {{ user.id }}
+        </v-btn>
+        <v-btn v-else text :route="{ path: '/' }">
+          ログイン
+        </v-btn>
+      </no-ssr>
+    </v-toolbar>
+  </div>
 </template>
 
 <script>
