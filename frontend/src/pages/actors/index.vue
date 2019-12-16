@@ -1,21 +1,14 @@
 <template>
   <v-container fluid>
     <v-row class="mx-auto d-flex flex-column">
-      <form>
-        <div class="my-4">
-          <v-checkbox v-model="isCreateMode" :label="`アカウントを作成する`" />
-        </div>
-        <div class="my-4">
-          <v-btn color="primary" @click="healthcheck">
-            ヘルスチェック
-          </v-btn>
-        </div>
-        <div class="my-4">
-          <v-btn color="primary" @click="handleClickSubmit">
-            {{ buttonText }}
-          </v-btn>
-        </div>
-      </form>
+      <div class="my-4">
+        <v-btn color="primary" @click="healthcheck">
+          ヘルスチェック
+        </v-btn>
+      </div>
+    </v-row>
+    <v-row>
+      <actors-card />
     </v-row>
   </v-container>
 </template>
@@ -23,8 +16,12 @@
 <script>
 import { mapActions } from "vuex"
 import Healthcheck from "@/plugins/axios/modules/healthcheck"
+import ActorsCard from "@/components/ActorsCard"
 
 export default {
+  components: {
+    ActorsCard
+  },
   asyncData({ redirect, store }) {
     if (store.getters["user"]) {
       redirect("/")
