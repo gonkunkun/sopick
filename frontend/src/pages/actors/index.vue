@@ -8,7 +8,7 @@
       </div>
     </v-row>
     <v-row>
-      <actors-card />
+      <actors-list />
     </v-row>
   </v-container>
 </template>
@@ -16,11 +16,11 @@
 <script>
 import { mapActions } from "vuex"
 import Healthcheck from "@/plugins/axios/modules/healthcheck"
-import ActorsCard from "@/components/ActorsCard"
+import ActorsList from "@/components/organisms/ActorsList"
 
 export default {
   components: {
-    ActorsCard
+    ActorsList
   },
   asyncData({ redirect, store }) {
     if (store.getters["user"]) {
