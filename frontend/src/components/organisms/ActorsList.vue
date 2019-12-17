@@ -25,38 +25,43 @@ export default {
     height: 300,
     cards: [
       {
-        title: "Pre-fab homes",
-        src: "https://cdn.vuetifyjs.com/images/cards/house.jpg",
-        flex: 12,
-        md: 12
-      },
-      {
-        title: "Favorite road trips",
-        src: "https://cdn.vuetifyjs.com/images/cards/road.jpg",
-        flex: 12,
-        md: 8
-      },
-      {
-        title: "Best airlines",
-        src: "https://cdn.vuetifyjs.com/images/cards/plane.jpg",
+        title: "コハク",
+        src:
+          "https://img.cityheaven.net/img/girls/tt/club-max/grdr0022463635_0332904101pc.jpg",
         flex: 12,
         md: 4
       },
       {
-        title: "Best airlines",
-        src: "https://cdn.vuetifyjs.com/images/cards/plane.jpg",
+        title: "Misono",
+        src:
+          "https://img.cityheaven.net/img/girls/tt/otome/grdr0025655665_0325033145pc.jpg",
         flex: 12,
         md: 4
       },
       {
-        title: "Best airlines",
-        src: "https://cdn.vuetifyjs.com/images/cards/plane.jpg",
+        title: "ほげほげ",
+        src:
+          "https://img.cityheaven.net/img/girls/tt/otome/grdr0020413179_0317853460pc.jpg",
         flex: 12,
-        md: 8
+        md: 4
       },
       {
-        title: "Best airlines",
-        src: "https://cdn.vuetifyjs.com/images/cards/plane.jpg",
+        title: "鈴村あいり",
+        src:
+          "https://static-assets.7msport.com/newsattached/1908/6633/a9548d9972517bdaf7559f5442d2d070.jpg",
+        flex: 12,
+        md: 4
+      },
+      {
+        title: "河南実里",
+        src:
+          "https://pbs.twimg.com/profile_images/1118850760865800192/UQxsFhD9_400x400.jpg",
+        flex: 12,
+        md: 4
+      },
+      {
+        title: "希志あいの",
+        src: "http://nicovideo.cdn.nimg.jp/thumbnails/29723744/29723744.L",
         flex: 12,
         md: 4
       }

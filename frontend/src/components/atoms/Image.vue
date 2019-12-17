@@ -2,17 +2,21 @@
   <v-img
     :src="src"
     class="white--text align-end"
-    gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+    :gradient="imageGradient"
     :height="height"
+    @mouseenter="MouseOverImage"
+    @mouseleave="MouseLeaveImage"
   >
-    <v-card-title v-text="title" />
+    <v-card-title class="pink--text text--lighten-5" v-text="title" />
+    <v-card-subtitle class="white--text">
+      T:158 B:86(C) W:59 H:86
+    </v-card-subtitle>
   </v-img>
 </template>
 
 <script>
 export default {
   name: "AtomImage",
-
   props: {
     src: {
       type: String,
@@ -29,6 +33,29 @@ export default {
       required: false,
       default: () => 300
     }
+  },
+  data: () => ({
+    imageGradient: "to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+  }),
+  methods: {
+    MouseOverImage: function() {
+      this.imageGradient = "to bottom, rgba(0,0,0,.0), rgba(0,0,0,.2)"
+    },
+    MouseLeaveImage: function() {
+      this.imageGradient = "to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+    }
   }
 }
 </script>
+
+<style scoped>
+.v-card {
+  transition: opacity 0.4s ease-in-out;
+}
+.v-card:not(.on-hover) {
+  opacity: 0.6;
+}
+.show-btns {
+  color: rgba(255, 255, 255, 1) !important;
+}
+</style>

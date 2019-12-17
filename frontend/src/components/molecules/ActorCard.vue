@@ -4,6 +4,8 @@
     <v-card-actions>
       <v-spacer />
 
+      <!-- TODO: AtomsをまとめてMoleculesとする -->
+      <!-- TODO: タグを追加する -->
       <heart />
       <bookmark />
       <share-variant />
