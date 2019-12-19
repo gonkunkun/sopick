@@ -16,7 +16,7 @@
 <script>
 import AtomImage from "@/components/atoms/Image"
 import Heart from "@/components/atoms/Heart"
-import Bookmark from "@/components/atoms/Bookmark"
+import Bookmark from "@/components/atoms/icons/Bookmark"
 import ShareVariant from "@/components/atoms/ShareVariant"
 
 export default {

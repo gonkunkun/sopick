@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-toolbar
+    <v-app-bar
       dark
       prominent
       src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
@@ -28,7 +28,7 @@
           ログイン
         </v-btn>
       </no-ssr>
-    </v-toolbar>
+    </v-app-bar>
   </div>
 </template>
 
