@@ -1,15 +1,47 @@
 import { storiesOf } from "@storybook/vue"
-import Bookmark from "./Bookmark.vue"
-import Heart from "./Heart.vue"
+import VuetifyIcon from "./VuetifyIcon.vue"
+import { withKnobs, text } from '@storybook/addon-knobs'
+
+// TODO: CFS記法に移行する
+// export default {
+//   title: "Icon",
+// }
+
+// export const VuetifyIconType = () => ({
+//   components: { VuetifyIcon },
+//   props: {
+//     icon: {
+//       default: String("mdi-bookmark", "mdi-bookmark")
+//     },
+//     color: {
+//       default: String("pink", "pink")
+//     }
+//   },
+//   template: `<vuetify-icon :icon="icon" :color="color" />`,
+//   info: {
+//     summary: "test"
+//   }
+// })
 
 storiesOf("Icons", module)
-  .add("Bookmark", () => ({
-      components: { Bookmark, Bookmark },
-      template: "<bookmark />"
-    }),
+  .addDecorator(withKnobs)
+  .add("VuetifyIcon", () => {
+      const icon = text("icon", "mdi-bookmark")
+      const color = text("color", "pink")
+      return {
+        components: { VuetifyIcon },
+      //   data() {
+      //     return {
+      //       color: icon,
+      //       icon: color
+      //     }
+      // },
+        template: `<vuetify-icon icon="${icon}" color="${color}" />`
+      }
+    },
     {
       info: {
-        summary: "ブックマークボタン"
+        summary: "Vuetifyで用意されているアイコン"
       }
     }
   )
