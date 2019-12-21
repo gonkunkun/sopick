@@ -1,14 +1,13 @@
 import { storiesOf } from "@storybook/vue"
 import AtomImage from "./Image.vue"
-import { text, number } from "@storybook/addon-knobs"
+import { text, number, array } from "@storybook/addon-knobs"
 
 storiesOf("Images", module).add(
   "Image",
   () => {
-    const src = text(
-      "src",
-      "https://www.pakutaso.com/shared/img/thumb/KAZ76_nemof01_TP_V.jpg"
-    )
+    const imagePath = array("imagePath", [{
+      image_path: "https://www.pakutaso.com/shared/img/thumb/KAZ76_nemof01_TP_V.jpg"
+    }])
     const name = text("name", "Test")
     const age = text("age", 25)
     const tall = text("tall", 160)
@@ -21,7 +20,7 @@ storiesOf("Images", module).add(
       components: { AtomImage },
       template: `
         <atom-image
-          src="${src}"
+          src="${imagePath[0].image_path}"
           name="${name}"
           age="${age}"
           tall="${tall}"

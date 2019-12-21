@@ -77,11 +77,17 @@ class Assets::Scraping::ScrapingActor
         actorImages = generateActorImageURLs(url)
 
         # 写メ日記画像が存在しない場合には、写メ日記存在フラグをfalseに更新して、次のループ処理を実行
-        if actorImages.length == 0
+        if actorImages.length <= 0
           actor.is_exist_diary = false
-          actor.save
           next
+        elsif
+          actor.is_exist_diary = true
+          actor.save
         end
+
+        puts actor[:name]
+        puts actor.is_exist_diary
+        puts actorImages.length
 
         actorImages.each do |elementActorImages|
           newActorImages.push({

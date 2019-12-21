@@ -1,6 +1,6 @@
 <template>
   <v-img
-    :src="src"
+    :src="actorImages[0].image_path"
     class="white--text align-end"
     :gradient="imageGradient"
     :height="height"
@@ -25,10 +25,14 @@ export default {
       required: true,
       default: () => null
     },
-    src: {
-      type: String,
+    actorImages: {
+      type: Array,
       required: true,
-      default: () => null
+      default: () => [
+        {
+          image_path: "/cosmos.jpg"
+        }
+      ]
     },
     name: {
       type: String,

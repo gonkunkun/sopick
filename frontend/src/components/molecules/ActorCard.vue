@@ -8,7 +8,7 @@
       :cup="actor.cup"
       :waist="actor.waist"
       :hip="actor.hip"
-      :src="actor.src"
+      :actor-images="actor.actor_images"
       :name="actor.name"
       :height="height"
     />
