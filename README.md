@@ -15,6 +15,11 @@ $ docker-compose up
 docker-compose run --rm rails bundle install
 ```
 
+- API -> http://localhost:3031
+- Database -> http://localhost:3033
+- Swagger -> http://localhost:3039
+- StoryBook -> http://localhost:6006/
+
 ## migrate使い方
 
 ```
@@ -25,9 +30,11 @@ docker-compose exec api bundle exec rails db:migrate:down VERSION={timestamp}
 docker-compose exec api bundle exec rails db:migrate 
 ```
 
-- API -> http://localhost:3031
-- Database -> http://localhost:3033
-- Swagger -> http://localhost:3039
+## バッチジョブの実行方法
+
+```
+docker-compose exec api bundle exec rails runner "Assets::Scraping::ScrapingActor.new.scrapingActorsDiary('hokkaido', 'SOAP')"
+```
 
 ## TroubleShoot
 各エラーメッセージが出た時の対処
