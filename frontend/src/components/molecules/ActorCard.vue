@@ -1,6 +1,17 @@
 <template>
   <v-card>
-    <atom-image :src="card.src" :title="card.title" :height="height" />
+    <atom-image
+      :actor="actor"
+      :age="actor.age"
+      :tall="actor.tall"
+      :bust="actor.bust"
+      :cup="actor.cup"
+      :waist="actor.waist"
+      :hip="actor.hip"
+      :src="actor.src"
+      :name="actor.name"
+      :height="height"
+    />
     <v-card-actions>
       <vuetify-chip />
       <v-spacer />
@@ -14,7 +25,7 @@
 </template>
 
 <script>
-import AtomImage from "@/components/atoms/Image"
+import AtomImage from "@/components/atoms/images/Image"
 import VuetifyIcon from "@/components/atoms/icons/VuetifyIcon"
 import VuetifyChip from "@/components/atoms/chips/VuetifyChip"
 
@@ -25,9 +36,8 @@ export default {
     VuetifyIcon,
     VuetifyChip
   },
-
   props: {
-    card: {
+    actor: {
       type: Object,
       required: true,
       default: () => null
