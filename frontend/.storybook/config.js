@@ -3,7 +3,7 @@ import Vuetify from "vuetify"
 import 'vuetify/dist/vuetify.css' 
 import { configure, addDecorator } from '@storybook/vue'
 import { withInfo } from "storybook-addon-vue-info"
-import { withKnobs } from '@storybook/addon-knobs'
+import { withKnobs, String } from '@storybook/addon-knobs'
 
 
 Vue.use(Vuetify)
@@ -23,11 +23,11 @@ addDecorator(() => ({
   `,
 }))
 
-// configure(require.context('../src/components', true, /\.stories\.js$/), module)
+configure(require.context('../src/components', true, /\.stories\.js$/), module)
 
-const req = require.context("../src/components", true, /\.stories\.js$/)
-const loadStories = () => {
-  req.keys().forEach(req)
-}
+// const req = require.context("../src/components", true, /\.stories\.js$/)
+// const loadStories = () => {
+//   req.keys().forEach(req)
+// }
 
-configure(loadStories, module)
+// configure(loadStories, module)

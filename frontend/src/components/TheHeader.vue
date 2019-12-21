@@ -2,7 +2,6 @@
   <div>
     <v-app-bar
       dark
-      prominent
       src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
     >
       <v-app-bar-nav-icon />
@@ -11,12 +10,9 @@
       <v-btn icon>
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-heart</v-icon>
-      </v-btn>
-      <v-btn text :route="{ path: '/posts/new' }">
+      <!-- <v-btn text :route="{ path: '/posts/new' }">
         新規投稿
-      </v-btn>
+      </v-btn> -->
       <v-btn text :route="{ path: '/posts/' }">
         投稿一覧
       </v-btn>

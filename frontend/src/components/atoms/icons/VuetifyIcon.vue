@@ -1,6 +1,8 @@
 <template>
   <v-btn icon>
-    <v-icon :color="color">{{ icon }}</v-icon>
+    <v-icon :color="color">
+      {{ icon }}
+    </v-icon>
   </v-btn>
 </template>
 

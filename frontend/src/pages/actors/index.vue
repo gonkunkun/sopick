@@ -1,12 +1,5 @@
 <template>
   <v-container fluid>
-    <v-row class="mx-auto d-flex flex-column">
-      <div class="my-4">
-        <v-btn color="primary" @click="healthcheck">
-          ヘルスチェック
-        </v-btn>
-      </div>
-    </v-row>
     <v-row>
       <actors-list />
     </v-row>
