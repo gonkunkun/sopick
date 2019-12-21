@@ -29,12 +29,6 @@ storiesOf("Icons", module)
       const color = text("color", "pink")
       return {
         components: { VuetifyIcon },
-      //   data() {
-      //     return {
-      //       color: icon,
-      //       icon: color
-      //     }
-      // },
         template: `<vuetify-icon icon="${icon}" color="${color}" />`
       }
     },
