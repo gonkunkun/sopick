@@ -6,26 +6,22 @@
 
       <!-- TODO: AtomsをまとめてMoleculesとする -->
       <!-- TODO: タグを追加する -->
-      <heart />
-      <bookmark />
-      <share-variant />
+      <vuetify-icon icon="mdi-heart" color="pink" />
+      <vuetify-icon icon="mdi-bookmark" color="orange" />
+      <vuetify-icon icon="mdi-share-variant" color="indigo" />
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
 import AtomImage from "@/components/atoms/Image"
-import Heart from "@/components/atoms/Heart"
-import Bookmark from "@/components/atoms/icons/Bookmark"
-import ShareVariant from "@/components/atoms/ShareVariant"
+import VuetifyIcon from "@/components/atoms/icons/VuetifyIcon"
 
 export default {
   name: "ActorCard",
   components: {
     AtomImage,
-    Heart,
-    Bookmark,
-    ShareVariant
+    VuetifyIcon
   },
 
   props: {
