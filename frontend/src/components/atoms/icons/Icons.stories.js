@@ -1,6 +1,6 @@
 import { storiesOf } from "@storybook/vue"
 import VuetifyIcon from "./VuetifyIcon.vue"
-import { withKnobs, text } from '@storybook/addon-knobs'
+import { text } from '@storybook/addon-knobs'
 
 // TODO: CFS記法に移行する
 // export default {
@@ -24,7 +24,6 @@ import { withKnobs, text } from '@storybook/addon-knobs'
 // })
 
 storiesOf("Icons", module)
-  .addDecorator(withKnobs)
   .add("VuetifyIcon", () => {
       const icon = text("icon", "mdi-bookmark")
       const color = text("color", "pink")
