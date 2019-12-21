@@ -5,7 +5,10 @@ import { text, number } from "@storybook/addon-knobs"
 storiesOf("Images", module).add(
   "Image",
   () => {
-    const src = text("src", "https://www.pakutaso.com/shared/img/thumb/KAZ76_nemof01_TP_V.jpg")
+    const src = text(
+      "src",
+      "https://www.pakutaso.com/shared/img/thumb/KAZ76_nemof01_TP_V.jpg"
+    )
     const name = text("name", "Test")
     const age = text("age", 25)
     const tall = text("tall", 160)
