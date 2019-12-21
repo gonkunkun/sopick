@@ -11,4 +11,5 @@ class ActorSerializer < ActiveModel::Serializer
              :hip,
              :actor_page_url
   # has_one :brothel
+  has_many :actor_images
 end
