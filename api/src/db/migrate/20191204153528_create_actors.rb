@@ -14,9 +14,9 @@ class CreateActors < ActiveRecord::Migration[6.0]
       t.integer  :bust
       t.string   :cup
       t.integer  :waist
-      t.string   :hip
+      t.integer  :hip
       t.string   :actor_page_url
-      t.boolean  :is_exist_diary, default: true
+      t.boolean  :is_exist_diary, default: false
       t.boolean  :is_delete, default: false
       t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
       t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }

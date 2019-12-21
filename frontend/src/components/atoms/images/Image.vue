@@ -1,15 +1,17 @@
 <template>
   <v-img
-    :src="src"
+    :src="actorImages[0].image_path"
     class="white--text align-end"
     :gradient="imageGradient"
     :height="height"
     @mouseenter="MouseOverImage"
     @mouseleave="MouseLeaveImage"
   >
-    <v-card-title class="pink--text text--lighten-5" v-text="title" />
+    <v-card-title class="pink--text text--lighten-5" v-text="name" />
     <v-card-subtitle class="white--text">
-      T:158 B:86(C) W:59 H:86
+      Age:{{ age }} T:{{ tall }} B:{{ bust }}({{ cup }}) W:{{ waist }} H:{{
+        hip
+      }}
     </v-card-subtitle>
   </v-img>
 </template>
@@ -18,15 +20,54 @@
 export default {
   name: "AtomImage",
   props: {
-    src: {
-      type: String,
+    actor: {
+      type: Object,
       required: true,
       default: () => null
     },
-    title: {
+    actorImages: {
+      type: Array,
+      required: true,
+      default: () => [
+        {
+          image_path: "/cosmos.jpg"
+        }
+      ]
+    },
+    name: {
       type: String,
       required: true,
-      default: () => null
+      default: () => "名無し"
+    },
+    age: {
+      type: Number,
+      required: false,
+      default: () => 0
+    },
+    tall: {
+      type: Number,
+      required: false,
+      default: () => 0
+    },
+    bust: {
+      type: Number,
+      required: false,
+      default: () => 0
+    },
+    cup: {
+      type: String,
+      required: false,
+      default: () => ""
+    },
+    waist: {
+      type: Number,
+      required: false,
+      default: () => 0
+    },
+    hip: {
+      type: Number,
+      required: false,
+      default: () => 0
     },
     height: {
       type: Number,

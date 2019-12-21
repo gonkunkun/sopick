@@ -1,51 +1,34 @@
 <template>
   <v-container fluid>
-    <v-row class="mx-auto d-flex flex-column">
-      <div class="my-4">
-        <v-btn color="primary" @click="healthcheck">
-          ヘルスチェック
-        </v-btn>
-      </div>
-    </v-row>
     <v-row>
-      <actors-list />
+      <actors-list :actors="actors" />
     </v-row>
   </v-container>
 </template>
 
 <script>
-import { mapActions } from "vuex"
-import Healthcheck from "@/plugins/axios/modules/healthcheck"
 import ActorsList from "@/components/organisms/ActorsList"
+import { RepositoryFactory } from "@/repositories/RepositoryFactory"
+const ActorsRepository = RepositoryFactory.get("actors")
 
 export default {
   components: {
     ActorsList
   },
-  asyncData({ redirect, store }) {
-    if (store.getters["user"]) {
-      redirect("/")
-    }
-    return {
-      isCreateMode: false,
-      formData: {
-        id: ""
-      }
-    }
+  data: () => ({
+    actors: []
+  }),
+  created() {
+    this.fetch()
   },
-  computed: {},
   methods: {
-    // ヘルスチェック
-    healthcheck() {
-      Healthcheck.healthcheck()
-        .then(response => {
-          console.log(response)
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
-    ...mapActions(["login", "register"])
+    async fetch() {
+      // this.isLoading = true
+      const actors = await ActorsRepository.getActors()
+      // this.isLoading = false
+      this.actors = actors.data
+      console.log(this.actors)
+    }
   }
 }
 </script>

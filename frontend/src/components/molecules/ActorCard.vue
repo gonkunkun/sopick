@@ -1,35 +1,43 @@
 <template>
   <v-card>
-    <atom-image :src="card.src" :title="card.title" :height="height" />
+    <atom-image
+      :actor="actor"
+      :age="actor.age"
+      :tall="actor.tall"
+      :bust="actor.bust"
+      :cup="actor.cup"
+      :waist="actor.waist"
+      :hip="actor.hip"
+      :actor-images="actor.actor_images"
+      :name="actor.name"
+      :height="height"
+    />
     <v-card-actions>
+      <vuetify-chip />
       <v-spacer />
-
       <!-- TODO: AtomsをまとめてMoleculesとする -->
       <!-- TODO: タグを追加する -->
-      <heart />
-      <bookmark />
-      <share-variant />
+      <vuetify-icon icon="mdi-heart" color="gray" />
+      <!-- <vuetify-icon icon="mdi-bookmark" color="orange" /> -->
+      <!-- <vuetify-icon icon="mdi-share-variant" color="indigo" /> -->
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
-import AtomImage from "@/components/atoms/Image"
-import Heart from "@/components/atoms/Heart"
-import Bookmark from "@/components/atoms/icons/Bookmark"
-import ShareVariant from "@/components/atoms/ShareVariant"
+import AtomImage from "@/components/atoms/images/Image"
+import VuetifyIcon from "@/components/atoms/icons/VuetifyIcon"
+import VuetifyChip from "@/components/atoms/chips/VuetifyChip"
 
 export default {
   name: "ActorCard",
   components: {
     AtomImage,
-    Heart,
-    Bookmark,
-    ShareVariant
+    VuetifyIcon,
+    VuetifyChip
   },
-
   props: {
-    card: {
+    actor: {
       type: Object,
       required: true,
       default: () => null
