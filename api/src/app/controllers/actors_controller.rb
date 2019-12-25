@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ActorsController < ApplicationController
   def index
     # TODO: ページング処理追加

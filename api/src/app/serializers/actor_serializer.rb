@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ActorSerializer < ActiveModel::Serializer
   attributes :id,
              :brothel_id,

@@ -10,16 +10,16 @@ class ApplicationController < ActionController::API
 
   # 400 Bad Request
   def response_bad_request
-    render status: 400, json: { status: 400, message: 'Bad Request' }
+    render status: 400, json: { status: 400, message: "Bad Request" }
   end
 
   # 401 Unauthorized
   def response_unauthorized
-    render status: 401, json: { status: 401, message: 'Unauthorized' }
+    render status: 401, json: { status: 401, message: "Unauthorized" }
   end
 
   # 404 Not Found
-  def response_not_found(class_name = 'page')
+  def response_not_found(class_name = "page")
     render status: 404, json: { status: 404, message: "#{class_name.capitalize} Not Found" }
   end
 
@@ -30,7 +30,7 @@ class ApplicationController < ActionController::API
 
   # 500 Internal Server Error
   def response_internal_server_error
-    render status: 500, json: { status: 500, message: 'Internal Server Error' }
+    render status: 500, json: { status: 500, message: "Internal Server Error" }
   end
 
   def not_found

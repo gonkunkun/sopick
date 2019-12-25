@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BrothelSerializer < ActiveModel::Serializer
   attributes :id,
              :brothel_name,
