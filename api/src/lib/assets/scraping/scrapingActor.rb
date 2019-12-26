@@ -11,16 +11,10 @@ class Assets::Scraping::ScrapingActor
   # シティヘブンネットから指定された県、業種の店舗/在籍女優の写メ日記を取得する関数
   # [params]
   def scrapingActorsDiary(prefecture, service)
-    serviceType = {
-      "HEALTH"      => "biz1",
-      "SOAP"        => "biz4",
-      "HOTE_HEALTH" => "biz5",
-      "DELI_HEALTH" => "biz6",
-      "ESTE_AROMA"  => "biz7"
-    }
+    @serviceType = BrothelType.find_by_type service
 
     # 店舗リストを取得する
-    brothels = generateBrothels(prefecture, serviceType.fetch(service))
+    brothels = generateBrothels(prefecture, @serviceType.identifier)
     brothels.each do |elementBrothel|
       puts elementBrothel[:brothel_name]
       @pref = Prefecture.find_by_prefecture_en elementBrothel[:prefecture_en]
@@ -34,8 +28,7 @@ class Assets::Scraping::ScrapingActor
         # area_en:           areaObject[:area_en],
         area_id:           elementBrothel[:area_id],
         area_detail_id:    elementBrothel[:area_detail_id],
-        brothel_type_id:   elementBrothel[:brothel_type_id],
-        brothel_type_name: elementBrothel[:brothel_type_name]
+        brothel_type_id:   @serviceType.id,
       })
 
       # 店舗に在籍している女優リストを作成する
@@ -205,11 +198,6 @@ class Assets::Scraping::ScrapingActor
       brothel[:brothel_type_id]   = splitUrl[7]
       brothel[:brothel_name]      = brothelDom.text
       brothel[:brothel_url]       = "https://www.cityheaven.net/#{brothelDom[:href]}"
-
-      # TODO: どこかから店舗種別を抜いてくる
-      brothel[:brothel_type_name] = ""
-      brothel[:prefecture]        = ""
-
       brothels.push(brothel)
     end
 
