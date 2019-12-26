@@ -45,8 +45,7 @@ ActiveRecord::Schema.define(version: 2019_12_04_154333) do
     t.string "brothel_name"
     t.string "brothel_name_en"
     t.string "brothel_url"
-    t.string "prefecture"
-    t.string "prefecture_en"
+    t.integer "prefecture_id"
     t.string "area"
     t.string "area_en"
     t.string "area_id"
@@ -56,7 +55,7 @@ ActiveRecord::Schema.define(version: 2019_12_04_154333) do
     t.boolean "is_delete", default: false
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
-    t.index ["brothel_name", "prefecture"], name: "index_brothels_on_brothel_name_and_prefecture", unique: true
+    t.index ["brothel_name", "prefecture_id"], name: "index_brothels_on_brothel_name_and_prefecture_id", unique: true
   end
 
   create_table "user_news_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class Brothel < ApplicationRecord
-  has_many :actors
+  extend ActiveHash::Associations::ActiveRecordExtensions
 
-  validates :brothel_name, uniqueness: { scope: :prefecture }
+  has_many :actors
+  belongs_to_active_hash  :prefecture
+
+  validates :brothel_name, uniqueness: { scope: :prefecture_id }
 end
