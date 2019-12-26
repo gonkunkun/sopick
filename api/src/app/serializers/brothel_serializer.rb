@@ -5,13 +5,14 @@ class BrothelSerializer < ActiveModel::Serializer
              :brothel_name,
              :brothel_name_en,
              :brothel_url,
+             :prefecture_id,
              :prefecture,
-             :prefecture_en,
              :area,
              :area_en,
              :area_id,
              :area_detail_id,
              :brothel_type_id,
              :brothel_type_name
-  has_many :actors
+  has_many   :actors
+
 end
