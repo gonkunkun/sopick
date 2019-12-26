@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ActorSerializer < ActiveModel::Serializer
   attributes :id,
              :brothel_id,
@@ -10,6 +12,6 @@ class ActorSerializer < ActiveModel::Serializer
              :waist,
              :hip,
              :actor_page_url
-  # has_one :brothel
+  has_one  :brothel
   has_many :actor_images
 end

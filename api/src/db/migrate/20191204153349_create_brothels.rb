@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 class CreateBrothels < ActiveRecord::Migration[6.0]
-  def change
+  def up
     create_table :brothels do |t|
       t.string   :brothel_name
       t.string   :brothel_name_en
       t.string   :brothel_url
-      t.string   :prefecture
-      t.string   :prefecture_en
+      t.integer  :prefecture_id
       t.string   :area
       t.string   :area_en
       t.string   :area_id
@@ -19,7 +18,7 @@ class CreateBrothels < ActiveRecord::Migration[6.0]
       t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
     end
 
-    add_index :brothels, [:brothel_name, :prefecture], unique: true
+    add_index :brothels, [:brothel_name, :prefecture_id], unique: true
   end
 
   def down

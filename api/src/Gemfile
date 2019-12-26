@@ -31,6 +31,9 @@ gem "mechanize"
 # コーディング効率化
 gem "solargraph"
 
+# ハッシュをモデルとして認識
+gem "active_hash"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   # pry-byebugを用いるためコメントアウト

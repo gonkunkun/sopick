@@ -23,13 +23,13 @@ class Assets::Scraping::ScrapingActor
     brothels = generateBrothels(prefecture, serviceType.fetch(service))
     brothels.each do |elementBrothel|
       puts elementBrothel[:brothel_name]
+      @pref = Prefecture.find_by_prefecture_en elementBrothel[:prefecture_en]
       # brothelsテーブルに値を格納する
       Brothel.upsert({
         brothel_name:      elementBrothel[:brothel_name],
         brothel_name_en:   elementBrothel[:brothel_name_en],
         brothel_url:       elementBrothel[:brothel_url],
-        prefecture:        elementBrothel[:prefecture],
-        prefecture_en:     elementBrothel[:prefecture_en],
+        prefecture_id:     @pref.id,
         # area:              areaObject[:area],
         # area_en:           areaObject[:area_en],
         area_id:           elementBrothel[:area_id],
@@ -45,7 +45,7 @@ class Assets::Scraping::ScrapingActor
       brothelActors.each do |elementActor|
         brothel = Brothel.find_by(
           brothel_name:  elementBrothel[:brothel_name],
-          prefecture_en: elementBrothel[:prefecture_en]
+          prefecture_id: @pref.id
         )
         puts elementActor[:name]
         newActors.push({
@@ -66,14 +66,14 @@ class Assets::Scraping::ScrapingActor
       # 写メ日記に掲載されている画像URLリストを作成する
       brothel = Brothel.find_by(
         brothel_name:  elementBrothel[:brothel_name],
-        prefecture_en: elementBrothel[:prefecture_en]
+        prefecture_id: @pref.id
       )
       actors = Actor.where(brothel_id: brothel[:id])
 
       actors.each do |actor|
         newActorImages = []
         puts actor[:name]
-        url = "https://www.cityheaven.net/#{brothel[:prefecture_en]}/#{brothel[:area_id]}/#{brothel[:area_detail_id]}/#{brothel[:brothel_name_en]}/girlid-#{actor[:girl_id]}/diary/"
+        url = "https://www.cityheaven.net/#{@pref.prefecture_en}/#{brothel[:area_id]}/#{brothel[:area_detail_id]}/#{brothel[:brothel_name_en]}/girlid-#{actor[:girl_id]}/diary/"
         actorImages = generateActorImageURLs(url)
 
         # 写メ日記画像が存在しない場合には、写メ日記存在フラグをfalseに更新して、次のループ処理を実行
