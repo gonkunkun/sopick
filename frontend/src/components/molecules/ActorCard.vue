@@ -13,7 +13,7 @@
       :height="height"
     />
     <v-card-actions>
-      <vuetify-chip />
+      <vuetify-chip :brothelType="actor.brothel.brothel_type.attributes.name" />
       <v-spacer />
       <!-- TODO: AtomsをまとめてMoleculesとする -->
       <!-- TODO: タグを追加する -->
