@@ -28,9 +28,11 @@ storiesOf("Icons", module).add(
   () => {
     const icon = text("icon", "mdi-bookmark")
     const color = text("color", "pink")
+    const url = text("url", "https://google.com")
+
     return {
       components: { VuetifyIcon },
-      template: `<vuetify-icon icon="${icon}" color="${color}" />`
+      template: `<vuetify-icon icon="${icon}" color="${color}" url="${url}" />`
     }
   },
   {

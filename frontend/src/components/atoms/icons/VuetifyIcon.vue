@@ -1,5 +1,5 @@
 <template>
-  <v-btn icon>
+  <v-btn icon :href="url" target="_blank">
     <v-icon :color="color">
       {{ icon }}
     </v-icon>
@@ -16,6 +16,11 @@ export default {
       default: () => null
     },
     color: {
+      type: String,
+      required: false,
+      default: () => ""
+    },
+    url: {
       type: String,
       required: false,
       default: () => ""

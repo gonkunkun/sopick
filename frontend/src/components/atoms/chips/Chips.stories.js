@@ -5,11 +5,13 @@ import { text } from "@storybook/addon-knobs"
 storiesOf("Chips", module).add(
   "VuetiyChip",
   () => {
-    const href = text("href", "http://google.com")
+    const url = text("url", "http://google.com")
     const color = text("color", "pink")
+    const brothelType = text("brothelType", "hogehoge")
+
     return {
       components: { VuetifyChip },
-      template: `<vuetify-chip href="${href}" color="${color}" />`
+      template: `<vuetify-chip url="${url}" color="${color}" brothelType="${brothelType}" />`
     }
   },
   {

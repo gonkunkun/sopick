@@ -1,12 +1,5 @@
 <template>
-  <v-chip
-    class="ma-1"
-    :color="color"
-    :href="href"
-    target="_blank"
-    small
-    outlined
-  >
+  <v-chip class="ma-1" :color="color" :url="url" target="_blank" small outlined>
     {{ brothelType }}
   </v-chip>
 </template>
@@ -20,7 +13,7 @@ export default {
       required: false,
       default: () => "pink"
     },
-    href: {
+    url: {
       type: String,
       required: false,
       default: () => ""

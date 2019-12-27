@@ -11,13 +11,20 @@
       :actor-images="actor.actor_images"
       :name="actor.name"
       :height="height"
+      :url="actor.actor_page_url"
     />
     <v-card-actions>
-      <vuetify-chip :brothelType="actor.brothel.brothel_type.attributes.name" />
+      <vuetify-chip
+        :brothel-type="actor.brothel.brothel_type.attributes.name"
+      />
       <v-spacer />
       <!-- TODO: AtomsをまとめてMoleculesとする -->
       <!-- TODO: タグを追加する -->
-      <vuetify-icon icon="mdi-heart" color="gray" />
+      <vuetify-icon
+        icon="mdi-open-in-new"
+        color="pink"
+        :url="actor.actor_page_url"
+      />
       <!-- <vuetify-icon icon="mdi-bookmark" color="orange" /> -->
       <!-- <vuetify-icon icon="mdi-share-variant" color="indigo" /> -->
     </v-card-actions>
