@@ -7,7 +7,7 @@
     small
     outlined
   >
-    デリヘル
+    {{ brothelType }}
   </v-chip>
 </template>
 
@@ -24,6 +24,11 @@ export default {
       type: String,
       required: false,
       default: () => ""
+    },
+    brothelType: {
+      type: String,
+      required: false,
+      default: () => "未設定"
     }
   }
 }
