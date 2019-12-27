@@ -1,12 +1,19 @@
 <template>
   <a target="_blank" :href="url">
     <v-img
-      :src="actorImage"
+      :src="actorImages[displayImageNumber].image_path"
       class="white--text align-end"
       :gradient="imageGradient"
       :height="height"
-      @mouseenter="MouseOverImage"
-      @mouseleave="MouseLeaveImage"
+      @mouseenter="
+        MouseOverImage
+        enterMouse()
+      "
+      @mouseleave="
+        MouseLeaveImage
+        leaveMouse()
+      "
+      @click="changeImage"
     >
       <v-card-title class="pink--text text--lighten-5" v-text="name" />
       <v-card-subtitle class="white--text">
@@ -20,17 +27,17 @@
 
 <script>
 export default {
-  name: "AtomImage",
+  name: "AtomImagesGarary",
   props: {
     actor: {
       type: Object,
       required: false,
       default: () => null
     },
-    actorImage: {
-      type: String,
+    actorImages: {
+      type: Array,
       required: true,
-      default: () => "/cosmos.jpg"
+      default: () => null
     },
     name: {
       type: String,
@@ -79,14 +86,50 @@ export default {
     }
   },
   data: () => ({
-    imageGradient: "to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+    imageGradient: "to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)",
+    displayImageNumber: 0,
+    onMouse: false
   }),
+  computed: {},
   methods: {
     MouseOverImage: function() {
       this.imageGradient = "to bottom, rgba(0,0,0,.0), rgba(0,0,0,.2)"
     },
     MouseLeaveImage: function() {
       this.imageGradient = "to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+    },
+    changeImage: function() {
+      // 配列の後ろまで到達してしまった場合には、先頭に戻る
+      if (this.displayImageNumber + 1 < this.actorImages.length) {
+        // 配列上の次の要素の画像を表示
+        this.displayImageNumber++
+      } else {
+        this.displayImageNumber = 0
+      }
+    },
+    enterMouse: async function() {
+      this.onMouse = true
+      // 3秒待つ
+      setTimeout(
+        function() {
+          let id = setInterval(
+            function() {
+              // マウスが画像上から外れていた場合には、画像を切替えずに処理を終了する
+              if (!this.onMouse) {
+                clearInterval(id)
+              } else {
+                // 画像を変更する
+                this.changeImage()
+              }
+            }.bind(this),
+            "750"
+          )
+        }.bind(this),
+        "1000"
+      )
+    },
+    leaveMouse: async function() {
+      this.onMouse = false
     }
   }
 }

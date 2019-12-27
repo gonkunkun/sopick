@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <atom-image
+    <atom-images-garary
       :actor="actor"
       :age="actor.age"
       :tall="actor.tall"
@@ -32,14 +32,14 @@
 </template>
 
 <script>
-import AtomImage from "@/components/atoms/images/Image"
+import AtomImagesGarary from "@/components/atoms/images/ImagesGarary"
 import VuetifyIcon from "@/components/atoms/icons/VuetifyIcon"
 import VuetifyChip from "@/components/atoms/chips/VuetifyChip"
 
 export default {
   name: "ActorCard",
   components: {
-    AtomImage,
+    AtomImagesGarary,
     VuetifyIcon,
     VuetifyChip
   },
