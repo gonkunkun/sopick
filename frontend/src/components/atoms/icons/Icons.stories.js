@@ -26,10 +26,6 @@ import { text } from "@storybook/addon-knobs"
 storiesOf("Icons", module).add(
   "VuetifyIcon",
   () => {
-    const icon = text("icon", "mdi-bookmark")
-    const color = text("color", "color")
-    const url = text("url", "https://google.com")
-
     return {
       props: {
         icon: {

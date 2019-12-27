@@ -5,13 +5,20 @@ import { text } from "@storybook/addon-knobs"
 storiesOf("Chips", module).add(
   "VuetiyChip",
   () => {
-    const url = text("url", "http://google.com")
-    const color = text("color", "pink")
-    const brothelType = text("brothelType", "hogehoge")
-
     return {
+      props: {
+        url: {
+          default: text("url", "http://google.com")
+        },
+        color: {
+          default: text("color", "pink")
+        },
+        brothelType: {
+          default: text("brothelType", "hogehoge")
+        }
+      },
       components: { VuetifyChip },
-      template: `<vuetify-chip url="${url}" color="${color}" brothelType="${brothelType}" />`
+      template: `<vuetify-chip :url="url" :color="color" :brothelType="brothelType" />`
     }
   },
   {
