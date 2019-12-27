@@ -9,7 +9,10 @@ storiesOf("Images", module).add(
     return {
       props: {
         actorImage: {
-          default: text("actorImage", "https://www.pakutaso.com/shared/img/thumb/KAZ76_nemof01_TP_V.jpg")
+          default: text(
+            "actorImage",
+            "https://www.pakutaso.com/shared/img/thumb/KAZ76_nemof01_TP_V.jpg"
+          )
         },
         name: {
           default: text("name", "Test")
@@ -89,10 +92,19 @@ storiesOf("Images", module).add(
           default: number("height", 300)
         },
         actorImages: {
-          default: array("actorImage", 
-          [
-            { image_path: "https://www.pakutaso.com/shared/img/thumb/KAZ76_nemof01_TP_V.jpg " },
-            { image_path: "http://画像まとめ.com/wp-content/uploads/2016/06/%E3%83%AF%E3%83%B3%E3%82%B3%E3%82%92%E6%8E%A2%E3%81%99%E7%94%BB%E5%83%8F16.jpg" }
+          default: array("actorImage", [
+            {
+              image_path:
+                "https://www.pakutaso.com/shared/img/thumb/KAZ76_nemof01_TP_V.jpg "
+            },
+            {
+              image_path:
+                "http://画像まとめ.com/wp-content/uploads/2016/06/%E3%83%AF%E3%83%B3%E3%82%B3%E3%82%92%E6%8E%A2%E3%81%99%E7%94%BB%E5%83%8F16.jpg"
+            },
+            {
+              image_path:
+                "https://news.walkerplus.com/article/205022/1259246_615.jpg"
+            }
           ])
         }
       },
