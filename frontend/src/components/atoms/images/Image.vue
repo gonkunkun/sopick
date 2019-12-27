@@ -1,19 +1,21 @@
 <template>
-  <v-img
-    :src="actorImages[0].image_path"
-    class="white--text align-end"
-    :gradient="imageGradient"
-    :height="height"
-    @mouseenter="MouseOverImage"
-    @mouseleave="MouseLeaveImage"
-  >
-    <v-card-title class="pink--text text--lighten-5" v-text="name" />
-    <v-card-subtitle class="white--text">
-      Age:{{ age }} T:{{ tall }} B:{{ bust }}({{ cup }}) W:{{ waist }} H:{{
-        hip
-      }}
-    </v-card-subtitle>
-  </v-img>
+  <a target="_blank" :href="url">
+    <v-img
+      :src="actorImages[0].image_path"
+      class="white--text align-end"
+      :gradient="imageGradient"
+      :height="height"
+      @mouseenter="MouseOverImage"
+      @mouseleave="MouseLeaveImage"
+    >
+      <v-card-title class="pink--text text--lighten-5" v-text="name" />
+      <v-card-subtitle class="white--text">
+        Age:{{ age }} T:{{ tall }} B:{{ bust }}({{ cup }}) W:{{ waist }} H:{{
+          hip
+        }}
+      </v-card-subtitle>
+    </v-img>
+  </a>
 </template>
 
 <script>
@@ -73,6 +75,11 @@ export default {
       type: Number,
       required: false,
       default: () => 300
+    },
+    url: {
+      type: String,
+      required: false,
+      default: () => "https://www.cityheaven.net/"
     }
   },
   data: () => ({
@@ -98,5 +105,11 @@ export default {
 }
 .show-btns {
   color: rgba(255, 255, 255, 1) !important;
+}
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: none;
 }
 </style>
