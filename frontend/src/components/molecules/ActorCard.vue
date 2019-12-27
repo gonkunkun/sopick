@@ -8,7 +8,7 @@
       :cup="actor.cup"
       :waist="actor.waist"
       :hip="actor.hip"
-      :actor-images="actor.actor_images"
+      :actor-image="actor.actor_images[0].image_path"
       :name="actor.name"
       :height="height"
       :url="actor.actor_page_url"

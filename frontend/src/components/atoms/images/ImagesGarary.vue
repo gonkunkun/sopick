@@ -1,7 +1,7 @@
 <template>
   <a target="_blank" :href="url">
     <v-img
-      :src="actorImage"
+      :src="actorImages[0].image_path"
       class="white--text align-end"
       :gradient="imageGradient"
       :height="height"
@@ -20,17 +20,17 @@
 
 <script>
 export default {
-  name: "AtomImage",
+  name: "AtomImagesGarary",
   props: {
     actor: {
       type: Object,
       required: false,
       default: () => null
     },
-    actorImage: {
-      type: String,
+    actorImages: {
+      type: Array,
       required: true,
-      default: () => "/cosmos.jpg"
+      default: () => null
     },
     name: {
       type: String,
@@ -79,7 +79,8 @@ export default {
     }
   },
   data: () => ({
-    imageGradient: "to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+    imageGradient: "to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)",
+    displayImageNumber: 0
   }),
   methods: {
     MouseOverImage: function() {
@@ -87,7 +88,17 @@ export default {
     },
     MouseLeaveImage: function() {
       this.imageGradient = "to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-    }
+    },
+    // クリックしたら画像を切替える
+    // changeImage: function() {
+    //   this.displayImageNumber = 1  
+    // }
+  },
+  computed: {
+    // クリックしたら画像を切替える
+    // changeImage: function() {
+    //   this.displayImageNumber = 1  
+    // }
   }
 }
 </script>
