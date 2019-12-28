@@ -1,28 +1,28 @@
 <template>
-  <a target="_blank" :href="url">
-    <v-img
-      :src="actorImages[displayImageNumber].image_path"
-      class="white--text align-end"
-      :gradient="imageGradient"
-      :height="height"
-      @mouseenter="
-        MouseOverImage
-        enterMouse()
-      "
-      @mouseleave="
-        MouseLeaveImage
-        leaveMouse()
-      "
-      @click="changeImage"
-    >
+  <v-img
+    :src="actorImages[displayImageNumber].image_path"
+    class="white--text align-end"
+    :gradient="imageGradient"
+    :height="height"
+    @mouseenter="
+      MouseOverImage()
+      enterMouse()
+    "
+    @mouseleave="
+      MouseLeaveImage()
+      leaveMouse()
+    "
+    @click="changeImage"
+  >
+    <a target="_blank" :href="url">
       <v-card-title class="pink--text text--lighten-5" v-text="name" />
       <v-card-subtitle class="white--text">
         Age:{{ age }} T:{{ tall }} B:{{ bust }}({{ cup }}) W:{{ waist }} H:{{
           hip
         }}
       </v-card-subtitle>
-    </v-img>
-  </a>
+    </a>
+  </v-img>
 </template>
 
 <script>
