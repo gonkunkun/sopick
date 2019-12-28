@@ -2,6 +2,8 @@
   <v-img
     v-touch:swipe.left="prevImage"
     v-touch:swipe.right="nextImage"
+    v-touch:longtap="enterMouse"
+    v-touch:end="leaveMouse"
     :src="actorImages[displayImageNumber].image_path"
     class="white--text align-end"
     :gradient="imageGradient"
@@ -88,8 +90,10 @@ export default {
   },
   data: () => ({
     imageGradient: "to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)",
+    imageChangeInterval: "750",
     displayImageNumber: 0,
-    onMouse: false
+    onMouse: false,
+    isRunnning: false
   }),
   computed: {},
   methods: {
@@ -118,7 +122,12 @@ export default {
       }
     },
     enterMouse: async function() {
+      if (this.isRunnning) {
+        return
+      }
       this.onMouse = true
+      this.isRunnning = true
+
       setTimeout(
         function() {
           let id = setInterval(
@@ -130,9 +139,10 @@ export default {
                 // 画像を変更する
                 this.nextImage()
               }
+              this.isRunnning = false
             }.bind(this),
             // 画像が切り替わる間隔（ms）
-            "750"
+            this.imageChangeInterval
           )
         }.bind(this),
         // 画像上にマウスを置いてから、ギャラリーが流れ始めるまでの時間（ms）
