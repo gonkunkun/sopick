@@ -109,7 +109,6 @@ export default {
     },
     enterMouse: async function() {
       this.onMouse = true
-      // 3秒待つ
       setTimeout(
         function() {
           let id = setInterval(
@@ -122,10 +121,12 @@ export default {
                 this.changeImage()
               }
             }.bind(this),
+            // 画像が切り替わる間隔（ms）
             "750"
           )
         }.bind(this),
-        "1000"
+        // 画像上にマウスを置いてから、ギャラリーが流れ始めるまでの時間（ms）
+        "100"
       )
     },
     leaveMouse: async function() {
