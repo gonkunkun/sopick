@@ -35,6 +35,7 @@ export default {
   plugins: [
     // "@/plugins/element-ui",
     "@/plugins/vuetify",
+    "@/plugins/vue2-touch-events",
     "@/plugins/axios/index"
   ],
   /*

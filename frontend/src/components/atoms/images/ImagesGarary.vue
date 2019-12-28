@@ -1,5 +1,7 @@
 <template>
   <v-img
+    v-touch:swipe.left="prevImage"
+    v-touch:swipe.right="nextImage"
     :src="actorImages[displayImageNumber].image_path"
     class="white--text align-end"
     :gradient="imageGradient"
@@ -12,7 +14,6 @@
       MouseLeaveImage()
       leaveMouse()
     "
-    @click="changeImage"
   >
     <a target="_blank" :href="url">
       <v-card-title class="pink--text text--lighten-5" v-text="name" />
@@ -98,7 +99,16 @@ export default {
     MouseLeaveImage: function() {
       this.imageGradient = "to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
     },
-    changeImage: function() {
+    prevImage: function() {
+      // 配列の後ろまで到達してしまった場合には、先頭に戻る
+      if (0 < this.displayImageNumber) {
+        // 配列上の次の要素の画像を表示
+        this.displayImageNumber--
+      } else {
+        this.displayImageNumber = this.actorImages.length - 1
+      }
+    },
+    nextImage: function() {
       // 配列の後ろまで到達してしまった場合には、先頭に戻る
       if (this.displayImageNumber + 1 < this.actorImages.length) {
         // 配列上の次の要素の画像を表示
@@ -118,7 +128,7 @@ export default {
                 clearInterval(id)
               } else {
                 // 画像を変更する
-                this.changeImage()
+                this.nextImage()
               }
             }.bind(this),
             // 画像が切り替わる間隔（ms）
