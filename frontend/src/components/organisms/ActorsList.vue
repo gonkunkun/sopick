@@ -1,10 +1,16 @@
 <template>
-  <v-container fluid>
+  <v-container>
     <div class="title py-1">
       キャスト一覧
     </div>
     <v-row>
-      <v-col v-for="actor in actors" :key="actor.name" :cols="flex" :md="md">
+      <v-col
+        v-for="actor in actors"
+        :key="actor.name"
+        :cols="flex"
+        :md="md"
+        :sm="sm"
+      >
         <actor-card :actor="actor" :height="height" />
       </v-col>
     </v-row>
@@ -29,7 +35,8 @@ export default {
   data: () => ({
     height: 300,
     flex: 12,
-    md: 3
+    md: 3,
+    sm: 4
     // actors: [
     //   {
     //     name: "コハク",
