@@ -36,6 +36,7 @@
     "prettier": "^1.19.1",
     "sb": "^5.1.11",
     "universal-cookie": "^4.0.2",
+    "vue2-touch-events": "^2.1.0",
     "vuetify": "^2.1.14"
   },
   "devDependencies": {
