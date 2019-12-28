@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-class ActorImageSerializer < ActiveModel::Serializer
+class ActorImageSerializer
+  include FastJsonapi::ObjectSerializer
   attributes :id,
              :image_path,
              :updated_at

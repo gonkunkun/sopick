@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-class ActorSerializer < ActiveModel::Serializer
+class ActorSerializer
+  include FastJsonapi::ObjectSerializer
   attributes :id,
              :brothel_id,
              :girl_id,

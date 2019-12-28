@@ -19,7 +19,8 @@ gem "rack-cors"
 gem "geocoder"
 
 # JSONの返却にSerializerを使う
-gem "active_model_serializers", "~> 0.10.0"
+# gem "active_model_serializers", "~> 0.10.0"
+gem "fast_jsonapi"
 
 # JSON Web Tokenを扱うためにimport
 gem "jwt"
