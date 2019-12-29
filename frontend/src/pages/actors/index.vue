@@ -23,10 +23,9 @@ export default {
   },
   methods: {
     async fetch() {
-      // this.isLoading = true
-      const actors = await ActorsRepository.getActors()
-      // this.isLoading = false
-      this.actors = actors.data
+      const response = await ActorsRepository.getActors()
+      this.actors = response.data
+      console.log("actors/index.vue")
       console.log(this.actors)
     }
   }
