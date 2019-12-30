@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-row>
-      <actors-list :actors="actors" />
+      <actors-list :actors="actors" :pagination="pagination" />
     </v-row>
   </v-container>
 </template>

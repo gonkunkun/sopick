@@ -3,6 +3,13 @@
     <div class="title py-1">
       キャスト一覧
     </div>
+    <div class="text-center">
+      <v-pagination
+        v-model="pagination.current_page"
+        :length="pagination.total_pages"
+        @input="changePage"
+      />
+    </div>
     <v-row>
       <v-col
         v-for="actor in actors"
@@ -19,6 +26,7 @@
 
 <script>
 import ActorCard from "@/components/molecules/ActorCard"
+import JsonApi from "devour-client"
 
 export default {
   name: "ActorList",
@@ -30,6 +38,11 @@ export default {
       type: Array,
       required: true,
       default: () => null
+    },
+    pagination: {
+      type: Object,
+      required: true,
+      default: () => null
     }
   },
   data: () => ({
@@ -37,6 +50,55 @@ export default {
     flex: 12,
     md: 3,
     sm: 4
-  })
+  }),
+  methods: {
+    changePage: async function(pageNumber) {
+      // TODO: 親コンポーネントと同じメソッドを使っているので、共通化する
+      const jsonApi = new JsonApi({ apiUrl: "http://localhost:3031" })
+      jsonApi.define("actor", {
+        id: "",
+        brothel_id: "",
+        girl_id: "",
+        name: "",
+        age: "",
+        tall: "",
+        bust: "",
+        cup: "",
+        waist: "",
+        hip: "",
+        actor_page_url: "",
+        updated_at: "",
+        brothel: {
+          jsonApi: "hasOne",
+          type: "brothel"
+        },
+        actor_images: {
+          jsonApi: "hasMany",
+          type: "actor_image"
+        }
+      })
+      jsonApi.define("brothel", {
+        brothel_name: "",
+        brothel_name_en: "",
+        brothel_url: "",
+        prefecture: "",
+        area: "",
+        area_en: "",
+        area_id: "",
+        area_detail_id: "",
+        brothel_type: ""
+      })
+      jsonApi.define("actor_image", {
+        image_path: "",
+        updated_at: ""
+      })
+
+      let { data, meta } = await jsonApi.findAll("actors", {
+        page: pageNumber
+      })
+      this.$parent.actors = data
+      this.$parent.pagination = meta.pagination
+    }
+  }
 }
 </script>
