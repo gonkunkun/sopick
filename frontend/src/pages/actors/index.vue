@@ -70,8 +70,7 @@ export default {
         updated_at: ""
       })
 
-      let { data, errors, meta, links } = await jsonApi.findAll("actors")
-      console.log(errors)
+      let { data, meta, links } = await jsonApi.findAll("actors")
       console.log(data)
       this.actors = data
       this.pagination = meta.pagination
