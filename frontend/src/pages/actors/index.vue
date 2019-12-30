@@ -17,10 +17,12 @@ export default {
     ActorsList
   },
   data: () => ({
-    actors: []
+    actors: [],
+    pagination: {},
+    links: {}
   }),
   created() {
-    this.fetch()
+    console.log(this.fetch())
   },
   methods: {
     async fetch() {
@@ -31,41 +33,49 @@ export default {
 
       const jsonApi = new JsonApi({ apiUrl: "http://localhost:3031" })
       jsonApi.define("actor", {
+        id: "",
+        brothel_id: "",
+        girl_id: "",
         name: "",
-        duration: "",
+        age: "",
+        tall: "",
+        bust: "",
+        cup: "",
+        waist: "",
+        hip: "",
+        actor_page_url: "",
+        updated_at: "",
         brothel: {
           jsonApi: "hasOne",
           type: "brothel"
+        },
+        actor_images: {
+          jsonApi: "hasMany",
+          type: "actor_image"
         }
       })
-      // jsonApi.define("actor", {
-      //   name: "",
-      //   movieActors: {
-      //     jsonApi: "hasMany",
-      //     type: "movieActors"
-      //   },
-      //   movies: {
-      //     jsonApi: "hasMany",
-      //     type: "movies"
-      //   }
-      // })
-      // jsonApi.define("genre", {
-      //   name: "",
-      //   movies: {
-      //     jsonApi: "hasMany",
-      //     type: "genres"
-      //   }
-      // })
-      // jsonApi.define("director", {
-      //   name: "",
-      //   movies: {
-      //     jsonApi: "hasMany",
-      //     type: "directors"
-      //   }
-      // })
-      let { data, errors, meta, links } = jsonApi.findAll("actors", "index")
+      jsonApi.define("brothel", {
+        brothel_name: "",
+        brothel_name_en: "",
+        brothel_url: "",
+        prefecture: "",
+        area: "",
+        area_en: "",
+        area_id: "",
+        area_detail_id: "",
+        brothel_type: ""
+      })
+      jsonApi.define("actor_image", {
+        image_path: "",
+        updated_at: ""
+      })
+
+      let { data, errors, meta, links } = await jsonApi.findAll("actors")
+      console.log(errors)
       console.log(data)
-      return { data, errors, meta, links }
+      this.actors = data
+      this.pagination = meta.pagination
+      this.links = links
     }
   }
 }
