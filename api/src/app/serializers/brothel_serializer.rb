@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-class BrothelSerializer < ActiveModel::Serializer
+class BrothelSerializer
+  include FastJsonapi::ObjectSerializer
   attributes :id,
              :brothel_name,
              :brothel_name_en,

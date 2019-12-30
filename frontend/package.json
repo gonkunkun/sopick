@@ -23,6 +23,7 @@
     "@storybook/vue": "^5.2.8",
     "babel-eslint": "^10.0.3",
     "core-js": "^2.6.11",
+    "devour-client": "^2.1.0",
     "dotenv": "^8.2.0",
     "eslint": "^6.7.0",
     "eslint-config-prettier": "^6.7.0",

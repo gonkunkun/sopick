@@ -19,7 +19,8 @@ gem "rack-cors"
 gem "geocoder"
 
 # JSONの返却にSerializerを使う
-gem "active_model_serializers", "~> 0.10.0"
+# gem "active_model_serializers", "~> 0.10.0"
+gem "fast_jsonapi"
 
 # JSON Web Tokenを扱うためにimport
 gem "jwt"
@@ -33,6 +34,9 @@ gem "solargraph"
 
 # ハッシュをモデルとして認識
 gem "active_hash"
+
+# ページング対応
+gem "kaminari"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
