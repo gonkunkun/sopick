@@ -1,9 +1,10 @@
 <template>
   <div class="text-center">
     <v-pagination
-      v-model="currentPage"
+      v-model="current"
       :length="totalPages"
       :total-visible="totalVisible"
+      @input="inputMethod"
     />
   </div>
 </template>
@@ -15,20 +16,29 @@ export default {
     currentPage: {
       type: Number,
       required: true,
-      default: () => 1
+      default: 1
     },
     totalPages: {
       type: Number,
       required: true,
-      default: () => null
+      default: 0
     },
     totalVisible: {
       type: Number,
-      required: true,
+      required: false,
       default: () => 9
+    },
+    inputMethod: {
+      type: Function,
+      required: false,
+      default: () => null
     }
   },
-  data: () => ({}),
+  data: function() {
+    return {
+      current: this.currentPage
+    }
+  },
   computed: {},
   methods: {}
 }

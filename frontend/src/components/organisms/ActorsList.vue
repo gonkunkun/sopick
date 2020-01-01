@@ -4,10 +4,10 @@
       キャスト一覧
     </div>
     <div class="text-center">
-      <v-pagination
-        v-model="pagination.current_page"
-        :length="pagination.total_pages"
-        @input="changePage"
+      <pagination
+        :current-page="pagination.current_page"
+        :total-pages="pagination.total_pages"
+        :input-method="changePage"
       />
     </div>
     <v-row>
@@ -21,17 +21,26 @@
         <actor-card :actor="actor" :height="height" />
       </v-col>
     </v-row>
+    <div class="text-center">
+      <pagination
+        :current-page="pagination.current_page"
+        :total-pages="pagination.total_pages"
+        @input="changePage"
+      />
+    </div>
   </v-container>
 </template>
 
 <script>
 import ActorCard from "@/components/molecules/ActorCard"
+import Pagination from "@/components/atoms/paginations/Paginations"
 import JsonApi from "devour-client"
 
 export default {
   name: "ActorList",
   components: {
-    ActorCard
+    ActorCard,
+    Pagination
   },
   props: {
     actors: {

@@ -1,6 +1,6 @@
 import { storiesOf } from "@storybook/vue"
 import Paginations from "./Paginations.vue"
-import { text, number, object } from "@storybook/addon-knobs"
+import { number } from "@storybook/addon-knobs"
 
 storiesOf("Paginations", module).add(
   "Pagination",
