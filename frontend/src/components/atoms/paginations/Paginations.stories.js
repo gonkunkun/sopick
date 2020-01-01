@@ -12,6 +12,9 @@ storiesOf("Paginations", module).add(
         },
         totalPages: {
           default: number("totalPages", 10)
+        },
+        totalVisible: {
+          default: number("totalVisible", 9)
         }
       },
       components: { Paginations },
@@ -19,6 +22,7 @@ storiesOf("Paginations", module).add(
         <v-pagination
           v-model="currentPage"
           :length="totalPages"
+          :total-visible="totalVisible"
         />
       `
     }

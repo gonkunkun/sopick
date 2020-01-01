@@ -3,6 +3,7 @@
     <v-pagination
       v-model="currentPage"
       :length="totalPages"
+      :total-visible="totalVisible"
     />
   </div>
 </template>
@@ -20,6 +21,11 @@ export default {
       type: Number,
       required: true,
       default: () => null
+    },
+    totalVisible: {
+      type: Number,
+      required: true,
+      default: () => 9
     }
   },
   data: () => ({}),
