@@ -1,8 +1,7 @@
 <template>
   <v-container>
-    <div class="title py-1">
-      キャスト一覧
-    </div>
+    <title-text text="キャスト一覧" />
+
     <div class="text-center">
       <pagination
         :current-page="pagination.current_page"
@@ -25,20 +24,22 @@
       <pagination
         :current-page="pagination.current_page"
         :total-pages="pagination.total_pages"
-        @input="changePage"
+        :input-method="changePage"
       />
     </div>
   </v-container>
 </template>
 
 <script>
-import ActorCard from "@/components/molecules/ActorCard"
+import TitleText from "@/components/atoms/texts/Title"
 import Pagination from "@/components/atoms/paginations/Paginations"
+import ActorCard from "@/components/molecules/ActorCard"
 import JsonApi from "devour-client"
 
 export default {
   name: "ActorList",
   components: {
+    TitleText,
     ActorCard,
     Pagination
   },
