@@ -2,10 +2,11 @@
 FROM node:12.7.0-alpine as build-stage
 
 WORKDIR /app
-COPY ./frontend/package.json ./frontend/yarn.lock 
-# ./frontend/webpack* ./
+COPY ./frontend/package.json /app
+COPY ./frontend/yarn.lock /app
+  # ./frontend/webpack* ./
 RUN yarn install
-COPY ./frontend/ ./
+COPY frontend/ /app
 # RUN yarn build
 # CMD ["yarn", "build", "-d", "--watch"]
 
