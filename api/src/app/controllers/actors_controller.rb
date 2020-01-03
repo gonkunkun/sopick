@@ -5,7 +5,7 @@ class ActorsController < ApplicationController
     actors = Actor
               .includes(:actor_images).includes(:brothel)
               .where(is_delete: 0, is_exist_diary: 1)
-              .order(created_at: :asc)
+              .order(updated_at: :desc)
               .page(params[:page] ||= 1)
     
     # join先のテーブルのattributeを戻り値に付与する
