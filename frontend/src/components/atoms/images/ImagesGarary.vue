@@ -17,14 +17,14 @@
       leaveMouse()
     "
   >
-    <a target="_blank" :href="url">
-      <v-card-title class="pink--text text--lighten-5" v-text="name" />
-      <v-card-subtitle class="white--text">
-        Age:{{ age }} T:{{ tall }} B:{{ bust }}({{ cup }}) W:{{ waist }} H:{{
-          hip
-        }}
-      </v-card-subtitle>
-    </a>
+    <!-- <a target="_blank" :href="url"> -->
+    <v-card-title class="pink--text text--lighten-5" v-text="name" />
+    <v-card-subtitle class="white--text">
+      Age:{{ age }} T:{{ tall }} B:{{ bust }}({{ cup }}) W:{{ waist }} H:{{
+        hip
+      }}
+    </v-card-subtitle>
+    <!-- </a> -->
   </v-img>
 </template>
 
@@ -81,12 +81,12 @@ export default {
       type: Number,
       required: false,
       default: () => 300
-    },
-    url: {
-      type: String,
-      required: false,
-      default: () => "https://www.cityheaven.net/"
     }
+    // url: {
+    //   type: String,
+    //   required: false,
+    //   default: () => "https://www.cityheaven.net/"
+    // }
   },
   data: () => ({
     imageGradient: "to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)",
