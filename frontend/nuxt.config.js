@@ -72,6 +72,7 @@ export default {
    ** Build configuration
    */
   build: {
+    hardSource: true,
     transpile: [
       // /^element-ui/,
       "vuetify/lib"
