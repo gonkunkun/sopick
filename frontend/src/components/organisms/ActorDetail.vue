@@ -1,6 +1,6 @@
 <template>
-  <v-container class="elevation-2">
-    <title-text text="キャスト詳細" />
+  <v-container fuild justify="center" class="elevation-2 pa-0">
+    <Profile :actor="actor" />
     <actor-carousels
       :actor-images="actor.actor_images"
       :model="model"
@@ -11,7 +11,7 @@
         <images-list :actor-images="actor.actor_images" @update="handler" />
       </v-row>
     </v-container>
-    <v-spacer></v-spacer>
+    <v-spacer />
     <nuxt-link to="/actors">
       トップへ戻る
     </nuxt-link>
@@ -19,14 +19,14 @@
 </template>
 
 <script>
-import TitleText from "@/components/atoms/texts/Title"
+import Profile from "@/components/atoms/texts/Profile"
 import ActorCarousels from "@/components/molecules/ActorCarousels"
 import ImagesList from "@/components/molecules/ImagesList"
 
 export default {
   name: "ActorDetail",
   components: {
-    TitleText,
+    Profile,
     ActorCarousels,
     ImagesList
   },

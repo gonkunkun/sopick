@@ -1,9 +1,6 @@
 <template>
   <div>
-    <v-app-bar
-      dark
-      src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
-    >
+    <v-app-bar dark>
       <!-- <v-app-bar-nav-icon /> -->
       <v-toolbar-title>Sopick</v-toolbar-title>
       <v-spacer />
