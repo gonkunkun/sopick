@@ -39,15 +39,18 @@ export default {
       type: Array,
       required: true,
       default: () => null
+    },
+    model: {
+      type: Number,
+      required: true
     }
   },
-  data: () => ({
-    model: 1
-  }),
+  data: () => ({}),
   methods: {
     // 中央画像が変更された場合、左右の画像も同時に変更する
     handler: function(newVal) {
-      this.model = newVal
+      this.$emit("update", newVal)
+      // this.model = newVal
     }
   }
 }

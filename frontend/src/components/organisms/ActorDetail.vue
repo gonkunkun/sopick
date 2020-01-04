@@ -1,10 +1,14 @@
 <template>
   <v-container>
     <title-text text="キャスト詳細" />
-    <actor-carousels :actor-images="actor.actor_images" />
+    <actor-carousels
+      :actor-images="actor.actor_images"
+      :model="model"
+      @update="handler"
+    />
     <v-container style="max-height: 400px" class="overflow-y-auto">
       <v-row align="center" justify="center">
-        <images-list :actor-images="actor.actor_images" />
+        <images-list :actor-images="actor.actor_images" @update="handler" />
       </v-row>
     </v-container>
     <nuxt-link to="/actors">
@@ -32,8 +36,15 @@ export default {
       default: () => null
     }
   },
-  data: () => ({}),
-  methods: {}
+  data: () => ({
+    model: 1
+  }),
+  methods: {
+    // 中央画像が変更された場合、左右の画像も同時に変更する
+    handler: function(newVal) {
+      this.model = newVal
+    }
+  }
 }
 </script>
 
