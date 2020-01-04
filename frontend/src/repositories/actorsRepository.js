@@ -47,6 +47,9 @@ export default {
     return jsonApi.findAll(resource, {
       page: pageNumber
     })
+  },
+  getActorById(actorId) {
+    return jsonApi.find(resource, actorId)
   }
 
   // createPost(payload) {

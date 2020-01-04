@@ -1,18 +1,19 @@
 <template>
   <v-card>
-    <atom-images-garary
-      :actor="actor"
-      :age="actor.age"
-      :tall="actor.tall"
-      :bust="actor.bust"
-      :cup="actor.cup"
-      :waist="actor.waist"
-      :hip="actor.hip"
-      :actor-images="actor.actor_images"
-      :name="actor.name"
-      :height="height"
-      :url="actor.actor_page_url"
-    />
+    <nuxt-link :to="`/actors/${actor.id}`">
+      <atom-images-garary
+        :actor="actor"
+        :age="actor.age"
+        :tall="actor.tall"
+        :bust="actor.bust"
+        :cup="actor.cup"
+        :waist="actor.waist"
+        :hip="actor.hip"
+        :actor-images="actor.actor_images"
+        :name="actor.name"
+        :height="height"
+      />
+    </nuxt-link>
     <v-card-actions>
       <vuetify-chip
         :brothel-type="actor.brothel.brothel_type.attributes.name"
@@ -54,6 +55,16 @@ export default {
       required: false,
       default: () => 300
     }
-  }
+  },
+  methods: {}
 }
 </script>
+
+<style scoped>
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: none;
+}
+</style>

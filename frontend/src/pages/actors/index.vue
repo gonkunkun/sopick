@@ -21,10 +21,10 @@ export default {
     links: {}
   }),
   created() {
-    console.log(this.fetch())
+    console.log(this.asyncData())
   },
   methods: {
-    async fetch() {
+    async asyncData() {
       let { data, meta, links } = await ActorsRepository.getActors()
       this.actors = data
       this.pagination = meta.pagination
