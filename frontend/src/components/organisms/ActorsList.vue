@@ -2,32 +2,12 @@
   <v-container>
     <title-text text="キャスト一覧" />
     <!-- 検索機能追加 -->
-    <!-- TODO: リファクタリング -->
-    <v-btn @click="testFunc">
-      test
-    </v-btn>
-    <v-row>
-      <v-col cols="12" sm="6" md="6">
-        <v-select
-          v-model="typeValue"
-          :items="typeItems"
-          attach
-          chips
-          label="業種"
-          multiple
-        />
-      </v-col>
-      <v-col ccols="12" sm="6" md="6">
-        <v-select
-          v-model="areaValue"
-          :items="areaItems"
-          attach
-          chips
-          label="都道府県"
-          multiple
-        />
-      </v-col>
-    </v-row>
+    <search-forms
+      :type-items="typeItems"
+      :type-value="typeValue"
+      :pref-items="prefItems"
+      :pref-value="prefValue"
+    />
     <div class="text-center">
       <pagination
         :current-page="pagination.current_page"
@@ -60,15 +40,18 @@
 import TitleText from "@/components/atoms/texts/Title"
 import Pagination from "@/components/atoms/paginations/Paginations"
 import ActorCard from "@/components/molecules/ActorCard"
+import SearchForms from "@/components/molecules/SearchForms"
 import { RepositoryFactory } from "@/repositories/RepositoryFactory"
 const ActorsRepository = RepositoryFactory.get("actors")
 const BrothelTypesRepository = RepositoryFactory.get("brothelTypes")
+const PrefecturesRepository = RepositoryFactory.get("prefectures")
 
 export default {
   name: "ActorList",
   components: {
     TitleText,
     ActorCard,
+    SearchForms,
     Pagination
   },
   props: {
@@ -90,25 +73,30 @@ export default {
     sm: 4,
     typeItems: [],
     typeValue: [],
-    areaItems: ["foo", "bar", "fizz", "buzz"],
-    areaValue: []
+    prefItems: [],
+    prefValue: []
   }),
+  mounted: function() {
+    this.onLoad()
+  },
   methods: {
     async onLoad() {
-      let response = await BrothelTypesRepository.getBrothelTypes()
-      response.data.forEach(item => {
+      // 業種リストの取得
+      let responseType = await BrothelTypesRepository.getBrothelTypes()
+      responseType.data.forEach(item => {
         this.typeItems.push(item.attributes.name)
+      })
+      // 都道府県リストの取得
+      let responsePref = await PrefecturesRepository.getPrefectures()
+      responsePref.data.forEach(item => {
+        this.prefItems.push(item.attributes.prefecture)
       })
     },
     changePage: async function(pageNumber) {
       let { data, meta } = await ActorsRepository.getActors(pageNumber)
       this.$parent.actors = data
       this.$parent.pagination = meta.pagination
-    },
-    testFunc: async function() {}
-  },
-  mounted: function() {
-    this.onLoad()
+    }
   }
 }
 </script>
