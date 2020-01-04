@@ -2,6 +2,7 @@
   <v-container>
     <title-text text="キャスト一覧" />
     <!-- 検索機能追加 -->
+    <!-- TODO: リファクタリング -->
     <v-btn @click="testFunc">
       test
     </v-btn>
@@ -87,25 +88,27 @@ export default {
     flex: 12,
     md: 3,
     sm: 4,
-    typeItems: ["foo", "bar", "fizz", "buzz"],
+    typeItems: [],
     typeValue: [],
     areaItems: ["foo", "bar", "fizz", "buzz"],
     areaValue: []
   }),
   methods: {
-    async asyncData() {
-      let { brothelTypes } = await BrothelTypesRepository.getBrothelTypes()
-      console.log(brothelTypes)
+    async onLoad() {
+      let response = await BrothelTypesRepository.getBrothelTypes()
+      response.data.forEach(item => {
+        this.typeItems.push(item.attributes.name)
+      })
     },
     changePage: async function(pageNumber) {
       let { data, meta } = await ActorsRepository.getActors(pageNumber)
       this.$parent.actors = data
       this.$parent.pagination = meta.pagination
     },
-    testFunc: async function() {
-      let { brothelTypes } = await BrothelTypesRepository.getBrothelTypes()
-      console.log(brothelTypes)
-    }
+    testFunc: async function() {}
+  },
+  mounted: function() {
+    this.onLoad()
   }
 }
 </script>
