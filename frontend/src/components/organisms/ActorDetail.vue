@@ -2,6 +2,11 @@
   <v-container>
     <title-text text="キャスト詳細" />
     <actor-carousels :actor-images="actor.actor_images" />
+    <v-container style="max-height: 400px" class="overflow-y-auto">
+      <v-row align="center" justify="center">
+        <images-list :actor-images="actor.actor_images" />
+      </v-row>
+    </v-container>
     <nuxt-link to="/actors">
       トップへ戻る
     </nuxt-link>
@@ -11,12 +16,14 @@
 <script>
 import TitleText from "@/components/atoms/texts/Title"
 import ActorCarousels from "@/components/molecules/ActorCarousels"
+import ImagesList from "@/components/molecules/ImagesList"
 
 export default {
   name: "ActorDetail",
   components: {
     TitleText,
-    ActorCarousels
+    ActorCarousels,
+    ImagesList
   },
   props: {
     actor: {
@@ -29,3 +36,14 @@ export default {
   methods: {}
 }
 </script>
+
+<style scoped>
+.v-container {
+  -ms-overflow-style: none; /* IE, Edge 対応 */
+  scrollbar-width: none; /* Firefox 対応 */
+}
+.container::-webkit-scrollbar {
+  /* Chrome, Safari 対応 */
+  display: none;
+}
+</style>

@@ -6,8 +6,7 @@
     :height="height"
     @mouseenter="MouseOverImage"
     @mouseleave="MouseLeaveImage"
-  >
-  </v-img>
+  />
 </template>
 
 <script>
@@ -22,7 +21,7 @@ export default {
     height: {
       type: Number,
       required: false,
-      default: () => 300
+      default: () => 80
     }
   },
   data: () => ({

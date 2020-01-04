@@ -1,11 +1,11 @@
 <template>
-  <v-row justify="center" style="height: 100%;">
+  <v-row justify="center">
     <v-col cols="12" md="3" sm="3">
       <carousels
+        v-if="$vuetify.breakpoint.smAndUp"
         :actor-images="actorImages"
         :show-arrows="false"
         :model-val="model - 1"
-        v-if="$vuetify.breakpoint.smAndUp"
       />
     </v-col>
     <v-col cols="12" md="4" sm="6">
@@ -17,10 +17,10 @@
     </v-col>
     <v-col cols="12" md="3" sm="3">
       <carousels
+        v-if="$vuetify.breakpoint.smAndUp"
         :actor-images="actorImages"
         :show-arrows="false"
         :model-val="model + 1"
-        v-if="$vuetify.breakpoint.smAndUp"
       />
     </v-col>
   </v-row>
@@ -37,7 +37,7 @@ export default {
   props: {
     actorImages: {
       type: Array,
-      required: false,
+      required: true,
       default: () => null
     }
   },
