@@ -1,6 +1,6 @@
 import Repository from "./Repository"
 
-const resource = "brothelTypes"
+const resource = "brothel_types"
 // viewの定義
 const jsonApi = Repository.jsonApi
 jsonApi.define("brothelTypes", {

@@ -102,8 +102,8 @@ export default {
       this.$parent.actors = data
       this.$parent.pagination = meta.pagination
     },
-    testFunc: function() {
-      let { brothelTypes } = BrothelTypesRepository.getBrothelTypes()
+    testFunc: async function() {
+      let { brothelTypes } = await BrothelTypesRepository.getBrothelTypes()
       console.log(brothelTypes)
     }
   }
