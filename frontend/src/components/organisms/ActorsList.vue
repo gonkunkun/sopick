@@ -2,6 +2,9 @@
   <v-container>
     <title-text text="キャスト一覧" />
     <!-- 検索機能追加 -->
+    <v-btn @click="testFunc">
+      test
+    </v-btn>
     <v-row>
       <v-col cols="12" sm="6" md="6">
         <v-select
@@ -11,7 +14,7 @@
           chips
           label="業種"
           multiple
-        ></v-select>
+        />
       </v-col>
       <v-col ccols="12" sm="6" md="6">
         <v-select
@@ -21,7 +24,7 @@
           chips
           label="都道府県"
           multiple
-        ></v-select>
+        />
       </v-col>
     </v-row>
     <div class="text-center">
@@ -58,6 +61,7 @@ import Pagination from "@/components/atoms/paginations/Paginations"
 import ActorCard from "@/components/molecules/ActorCard"
 import { RepositoryFactory } from "@/repositories/RepositoryFactory"
 const ActorsRepository = RepositoryFactory.get("actors")
+const BrothelTypesRepository = RepositoryFactory.get("brothelTypes")
 
 export default {
   name: "ActorList",
@@ -89,10 +93,18 @@ export default {
     areaValue: []
   }),
   methods: {
+    async asyncData() {
+      let { brothelTypes } = await BrothelTypesRepository.getBrothelTypes()
+      console.log(brothelTypes)
+    },
     changePage: async function(pageNumber) {
       let { data, meta } = await ActorsRepository.getActors(pageNumber)
       this.$parent.actors = data
       this.$parent.pagination = meta.pagination
+    },
+    testFunc: function() {
+      let { brothelTypes } = BrothelTypesRepository.getBrothelTypes()
+      console.log(brothelTypes)
     }
   }
 }
