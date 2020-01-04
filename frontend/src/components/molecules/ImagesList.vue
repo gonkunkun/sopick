@@ -6,7 +6,7 @@
           v-for="(item, i) in actorImages"
           :key="i"
           class="d-flex child-flex"
-          xs="3"
+          cols="3"
           sm="2"
           md="1"
         >

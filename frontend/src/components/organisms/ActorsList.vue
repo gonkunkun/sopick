@@ -1,7 +1,29 @@
 <template>
   <v-container>
     <title-text text="キャスト一覧" />
-
+    <!-- 検索機能追加 -->
+    <v-row>
+      <v-col cols="12" sm="6" md="6">
+        <v-select
+          v-model="typeValue"
+          :items="typeItems"
+          attach
+          chips
+          label="業種"
+          multiple
+        ></v-select>
+      </v-col>
+      <v-col ccols="12" sm="6" md="6">
+        <v-select
+          v-model="areaValue"
+          :items="areaItems"
+          attach
+          chips
+          label="都道府県"
+          multiple
+        ></v-select>
+      </v-col>
+    </v-row>
     <div class="text-center">
       <pagination
         :current-page="pagination.current_page"
@@ -60,7 +82,11 @@ export default {
     height: 300,
     flex: 12,
     md: 3,
-    sm: 4
+    sm: 4,
+    typeItems: ["foo", "bar", "fizz", "buzz"],
+    typeValue: [],
+    areaItems: ["foo", "bar", "fizz", "buzz"],
+    areaValue: []
   }),
   methods: {
     changePage: async function(pageNumber) {
