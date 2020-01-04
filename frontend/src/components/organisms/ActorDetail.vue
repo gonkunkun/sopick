@@ -1,5 +1,5 @@
 <template>
-  <v-container fuild justify="center" class="elevation-2 pa-0">
+  <v-container fuild class="elevation-2 pa-0">
     <Profile :actor="actor" />
     <actor-carousels
       :actor-images="actor.actor_images"

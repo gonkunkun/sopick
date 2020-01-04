@@ -1,6 +1,6 @@
 <template>
-  <div class="pink lighten-3 ">
-    <v-card-title class="pink--text text--lighten-5" v-text="actor.name" />
+  <div class="pink lighten-4 ">
+    <v-card-title class="white--text text--lighten-5" v-text="actor.name" />
     <v-card-subtitle class="white--text">
       Age:{{ actor.age }} T:{{ actor.tall }} B:{{ actor.bust }}({{ actor.cup }})
       W:{{ actor.waist }} H:{{ actor.hip }}
