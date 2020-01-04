@@ -1,9 +1,5 @@
 <template>
   <v-container fluid>
-    <p>テストページ</p>
-    <nuxt-link to="/actors">
-      トップへ戻る
-    </nuxt-link>
     <v-row>
       <actor-detail :actor="actor" />
     </v-row>

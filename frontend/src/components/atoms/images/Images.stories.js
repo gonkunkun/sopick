@@ -15,27 +15,6 @@ storiesOf("Images", module).add(
             "https://www.pakutaso.com/shared/img/thumb/KAZ76_nemof01_TP_V.jpg"
           )
         },
-        name: {
-          default: text("name", "Test")
-        },
-        age: {
-          default: number("age", 25)
-        },
-        tall: {
-          default: number("tall", 160)
-        },
-        bust: {
-          default: number("bust", 80)
-        },
-        cup: {
-          default: text("cup", "C")
-        },
-        waist: {
-          default: number("waist", 60)
-        },
-        hip: {
-          default: number("hip", 60)
-        },
         height: {
           default: number("height", 300)
         }
@@ -44,13 +23,6 @@ storiesOf("Images", module).add(
       template: `
         <atom-image
           :actor-image="actorImage"
-          :name="name"
-          :age="age"
-          :tall="tall"
-          :bust="bust"
-          :cup="cup"
-          :waist="waist"
-          :hip="hip"
           :height="height"
         />
       `

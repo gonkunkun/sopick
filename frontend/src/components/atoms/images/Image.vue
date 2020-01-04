@@ -1,81 +1,28 @@
 <template>
-  <a target="_blank" :href="url">
-    <v-img
-      :src="actorImage"
-      class="white--text align-end"
-      :gradient="imageGradient"
-      :height="height"
-      @mouseenter="MouseOverImage"
-      @mouseleave="MouseLeaveImage"
-    >
-      <v-card-title class="pink--text text--lighten-5" v-text="name" />
-      <v-card-subtitle class="white--text">
-        Age:{{ age }} T:{{ tall }} B:{{ bust }}({{ cup }}) W:{{ waist }} H:{{
-          hip
-        }}
-      </v-card-subtitle>
-    </v-img>
-  </a>
+  <v-img
+    :src="actorImage"
+    class="white--text align-end"
+    :gradient="imageGradient"
+    :height="height"
+    @mouseenter="MouseOverImage"
+    @mouseleave="MouseLeaveImage"
+  >
+  </v-img>
 </template>
 
 <script>
 export default {
   name: "AtomImage",
   props: {
-    actor: {
-      type: Object,
-      required: false,
-      default: () => null
-    },
     actorImage: {
       type: String,
       required: true,
       default: () => "/cosmos.jpg"
     },
-    name: {
-      type: String,
-      required: true,
-      default: () => "名無し"
-    },
-    age: {
-      type: Number,
-      required: false,
-      default: () => 0
-    },
-    tall: {
-      type: Number,
-      required: false,
-      default: () => 0
-    },
-    bust: {
-      type: Number,
-      required: false,
-      default: () => 0
-    },
-    cup: {
-      type: String,
-      required: false,
-      default: () => ""
-    },
-    waist: {
-      type: Number,
-      required: false,
-      default: () => 0
-    },
-    hip: {
-      type: Number,
-      required: false,
-      default: () => 0
-    },
     height: {
       type: Number,
       required: false,
       default: () => 300
-    },
-    url: {
-      type: String,
-      required: false,
-      default: () => "https://www.cityheaven.net/"
     }
   },
   data: () => ({

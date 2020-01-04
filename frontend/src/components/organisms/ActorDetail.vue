@@ -2,6 +2,9 @@
   <v-container>
     <title-text text="キャスト詳細" />
     <actor-carousels :actor-images="actor.actor_images" />
+    <nuxt-link to="/actors">
+      トップへ戻る
+    </nuxt-link>
   </v-container>
 </template>
 
