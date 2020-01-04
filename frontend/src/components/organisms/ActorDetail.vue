@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="elevation-2">
     <title-text text="キャスト詳細" />
     <actor-carousels
       :actor-images="actor.actor_images"
@@ -11,6 +11,7 @@
         <images-list :actor-images="actor.actor_images" @update="handler" />
       </v-row>
     </v-container>
+    <v-spacer></v-spacer>
     <nuxt-link to="/actors">
       トップへ戻る
     </nuxt-link>
