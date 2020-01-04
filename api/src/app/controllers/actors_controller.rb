@@ -10,7 +10,7 @@ class ActorsController < ApplicationController
     
     # join先のテーブルのattributeを戻り値に付与する
     options = {}
-    options[:include] = [:actor_images, :brothel]
+    options = setOptions(options)
     # TODO: ページネーション用URLに変更する
     options[:links] = {
       self: '...',
@@ -21,11 +21,20 @@ class ActorsController < ApplicationController
   end
 
   def show
-    actor = Actor.find(params[:id])
-    render json: actor
+    @actor = Actor.find(params[:id])
+    
+    options = {}
+    options[:include] = [:actor_images, :brothel]
+    
+    render_json(ActorSerializer, @actor, options)
   end
 
   private
+
+  def setOptions(options)
+    options[:include] = [:actor_images, :brothel]
+    return options
+  end
 
   # ページネーションに関するlinkを追加する
   # def links_pagination(paginated_obj, options={})
