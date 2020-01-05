@@ -1,7 +1,11 @@
 import ActorsRepository from "./actorsRepository"
+import BrothelTypesRepository from "./brothelTypesRepository"
+import PrefecturesRepository from "./prefecturesRepository"
 
 const repositories = {
-  actors: ActorsRepository
+  actors: ActorsRepository,
+  brothelTypes: BrothelTypesRepository,
+  prefectures: PrefecturesRepository
   // other repositories ...
 }
 

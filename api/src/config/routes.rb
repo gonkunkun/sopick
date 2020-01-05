@@ -2,6 +2,8 @@
 
 Rails.application.routes.draw do
   resources :actors, only: [:index, :show]
+  resources :brothel_types, only: [:index]
+  resources :prefectures, only: [:index]
 
   get "healthcheck", to: "samples#healthcheck"
   get "healthcheckWithAuth", to: "samples#healthcheckWithAuth"

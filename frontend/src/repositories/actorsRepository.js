@@ -42,10 +42,13 @@ jsonApi.define("actor_image", {
 })
 
 export default {
-  getActors(pageNumber = 1) {
-    // return Repository.get(`${resource}`)
+  getActors(pageNumber = 1, types = [], prefs = []) {
+    console.log(types)
+    console.log(prefs)
     return jsonApi.findAll(resource, {
-      page: pageNumber
+      page: pageNumber,
+      types: types,
+      prefs: prefs
     })
   },
   getActorById(actorId) {

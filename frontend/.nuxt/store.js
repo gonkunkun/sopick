@@ -19,6 +19,7 @@ let store = {};
   // Enforce store modules
   store.modules = store.modules || {}
 
+  resolveStoreModules(require('../src/store/actors.js'), 'actors.js')
   resolveStoreModules(require('../src/store/posts.js'), 'posts.js')
 
   // If the environment supports hot reloading...
@@ -26,6 +27,7 @@ let store = {};
   if (process.client && module.hot) {
     // Whenever any Vuex module is updated...
     module.hot.accept([
+      '../src/store/actors.js',
       '../src/store/index.js',
       '../src/store/posts.js',
     ], () => {
