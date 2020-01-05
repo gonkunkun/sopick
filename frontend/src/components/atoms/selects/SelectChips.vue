@@ -3,11 +3,12 @@
     <v-select
       v-model="selectValue"
       :items="selectItems"
+      :label="label"
       attach
       chips
-      :label="label"
       multiple
       @input="updateValue"
+      return-object
     />
   </v-col>
 </template>

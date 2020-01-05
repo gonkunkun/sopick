@@ -90,12 +90,20 @@ export default {
       // 業種リストの取得
       let responseType = await BrothelTypesRepository.getBrothelTypes()
       responseType.data.forEach(item => {
-        this.typeItems.push(item.attributes.name)
+        let obj = {
+          value: item.attributes.id,
+          text: item.attributes.name
+        }
+        this.typeItems.push(obj)
       })
       // 都道府県リストの取得
       let responsePref = await PrefecturesRepository.getPrefectures()
       responsePref.data.forEach(item => {
-        this.prefItems.push(item.attributes.prefecture)
+        let obj = {
+          value: item.attributes.id,
+          text: item.attributes.prefecture
+        }
+        this.prefItems.push(obj)
       })
     },
     changePage: async function(pageNumber) {
@@ -105,6 +113,8 @@ export default {
     },
     // 検索フォームの条件変更を検知して、vuexの値を更新する
     updated: function(values, label) {
+      console.log(values)
+      console.log(label)
       this.$store.commit("actors/updateSearchValues", {
         values: values,
         label: label
@@ -114,22 +124,13 @@ export default {
       // 業種と都道府県情報を持ってくる
       console.log("test")
       let { data, meta } = await ActorsRepository.getActors(
-        1
-        // this.typeValue,
-        // this.prefValue
+        1,
+        this.searchValues.typeValue,
+        this.searchValues.prefValue
       )
       this.$parent.actors = data
       this.$parent.pagination = meta.pagination
     }
   }
-  // watch: {
-  //   selectValue: function(newVal) {
-  //     console.log(newVal)
-  //     // console.log(this.$store.getters["actors/getSearchValues"])
-  //     this.$store.commit("actors/updateSearchValues", {
-  //       selectValue: newVal
-  //     })
-  //   }
-  // }
 }
 </script>
