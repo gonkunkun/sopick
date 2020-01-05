@@ -46,6 +46,7 @@ export default {
   },
   methods: {
     updated: function(event, label) {
+      console.log(event)
       this.$emit("updated", event, label)
     }
   }

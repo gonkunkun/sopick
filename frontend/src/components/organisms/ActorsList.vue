@@ -2,9 +2,6 @@
   <v-container>
     <title-text text="キャスト一覧" />
     <!-- 検索機能追加 -->
-    <v-btn @click="testFunc()">
-      test
-    </v-btn>
     <search-forms
       :type-items="typeItems"
       :type-value="searchValues.typeValue"
@@ -16,7 +13,7 @@
       <pagination
         :current-page="pagination.current_page"
         :total-pages="pagination.total_pages"
-        :input-method="changePage"
+        :input-method="fetchActors"
       />
     </div>
     <v-row>
@@ -34,7 +31,7 @@
       <pagination
         :current-page="pagination.current_page"
         :total-pages="pagination.total_pages"
-        :input-method="changePage"
+        :input-method="fetchActors"
       />
     </div>
   </v-container>
@@ -106,8 +103,12 @@ export default {
         this.prefItems.push(obj)
       })
     },
-    changePage: async function(pageNumber) {
-      let { data, meta } = await ActorsRepository.getActors(pageNumber)
+    fetchActors: async function(pageNumber) {
+      let { data, meta } = await ActorsRepository.getActors(
+        pageNumber,
+        this.searchValues.typeValue,
+        this.searchValues.prefValue
+      )
       this.$parent.actors = data
       this.$parent.pagination = meta.pagination
     },
@@ -119,17 +120,7 @@ export default {
         values: values,
         label: label
       })
-    },
-    testFunc: async function() {
-      // 業種と都道府県情報を持ってくる
-      console.log("test")
-      let { data, meta } = await ActorsRepository.getActors(
-        1,
-        this.searchValues.typeValue,
-        this.searchValues.prefValue
-      )
-      this.$parent.actors = data
-      this.$parent.pagination = meta.pagination
+      this.fetchActors(1)
     }
   }
 }

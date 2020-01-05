@@ -8,7 +8,6 @@
       chips
       multiple
       @input="updateValue"
-      return-object
     />
   </v-col>
 </template>
@@ -38,6 +37,7 @@ export default {
   },
   methods: {
     updateValue: function(event) {
+      console.log(event)
       this.$emit("updated", event, this.label)
     }
   }

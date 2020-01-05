@@ -7,6 +7,7 @@
 </template>
 
 <script>
+// import { mapState } from "vuex"
 import ActorsList from "@/components/organisms/ActorsList"
 import { RepositoryFactory } from "@/repositories/RepositoryFactory"
 const ActorsRepository = RepositoryFactory.get("actors")
@@ -20,6 +21,9 @@ export default {
     pagination: {},
     links: {}
   }),
+  // computed: {
+  //   ...mapState("actors", ["searchValues", "getThisPage"])
+  // },
   created() {
     console.log(this.asyncData())
   },
