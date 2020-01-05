@@ -8,17 +8,17 @@ class ActorsController < ApplicationController
 
     #  TODO: Formクラスに処理を移管する
     if params[:prefs].present?
-      scope = scope.where(brothels: {prefecture_id: params[:prefs]})
+      scope = scope.where(brothels: { prefecture_id: params[:prefs] })
     end
     if params[:types].present?
-      scope = scope.where(brothels: {brothel_type_id: params[:types]})
+      scope = scope.where(brothels: { brothel_type_id: params[:types] })
     end
     scope = scope
               .order(updated_at: :desc)
               .page(params[:page] ||= 1)
 
     actors = scope
-              
+
     print params[:types]
     print params[:prefs]
     # join先のテーブルのattributeを戻り値に付与する
@@ -26,28 +26,27 @@ class ActorsController < ApplicationController
     options = setOptions(options)
     # TODO: ページネーション用URLに変更する
     options[:links] = {
-      self: '...',
-      next: '...',
-      prev: '...'
+      self: "...",
+      next: "...",
+      prev: "..."
     }
     render_json(ActorSerializer, actors, options)
   end
 
   def show
     @actor = Actor.find(params[:id])
-    
+
     options = {}
     options[:include] = [:actor_images, :brothel]
-    
+
     render_json(ActorSerializer, @actor, options)
   end
 
   private
-
-  def setOptions(options)
-    options[:include] = [:actor_images, :brothel]
-    return options
-  end
+    def setOptions(options)
+      options[:include] = [:actor_images, :brothel]
+      options
+    end
 
   # ページネーションに関するlinkを追加する
   # def links_pagination(paginated_obj, options={})
@@ -68,5 +67,4 @@ class ActorsController < ApplicationController
   #     }
   #   }
   # end
-
 end
