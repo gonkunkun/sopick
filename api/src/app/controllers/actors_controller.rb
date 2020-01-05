@@ -2,12 +2,25 @@
 
 class ActorsController < ApplicationController
   def index
-    actors = Actor
+    scope = Actor
               .includes(:actor_images).includes(:brothel)
               .where(is_delete: 0, is_exist_diary: 1)
+
+    #  TODO: Formクラスに処理を移管する
+    if params[:prefs].present?
+      scope = scope.where(brothels: {prefecture_id: params[:prefs]})
+    end
+    if params[:types].present?
+      scope = scope.where(brothels: {brothel_type_id: params[:types]})
+    end
+    scope = scope
               .order(updated_at: :desc)
               .page(params[:page] ||= 1)
-    
+
+    actors = scope
+              
+    print params[:types]
+    print params[:prefs]
     # join先のテーブルのattributeを戻り値に付与する
     options = {}
     options = setOptions(options)

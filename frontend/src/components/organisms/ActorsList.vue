@@ -7,9 +7,10 @@
     </v-btn>
     <search-forms
       :type-items="typeItems"
-      :type-value="typeValue"
+      :type-value="searchValues.typeValue"
       :pref-items="prefItems"
-      :pref-value="prefValue"
+      :pref-value="searchValues.prefValue"
+      @updated="updated"
     />
     <div class="text-center">
       <pagination
@@ -40,6 +41,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
 import TitleText from "@/components/atoms/texts/Title"
 import Pagination from "@/components/atoms/paginations/Paginations"
 import ActorCard from "@/components/molecules/ActorCard"
@@ -75,10 +77,11 @@ export default {
     md: 3,
     sm: 4,
     typeItems: [],
-    typeValue: [],
-    prefItems: [],
-    prefValue: []
+    prefItems: []
   }),
+  computed: {
+    ...mapState("actors", ["searchValues"])
+  },
   mounted: function() {
     this.onLoad()
   },
@@ -87,12 +90,20 @@ export default {
       // 業種リストの取得
       let responseType = await BrothelTypesRepository.getBrothelTypes()
       responseType.data.forEach(item => {
-        this.typeItems.push(item.attributes.name)
+        let obj = {
+          value: item.attributes.id,
+          text: item.attributes.name
+        }
+        this.typeItems.push(obj)
       })
       // 都道府県リストの取得
       let responsePref = await PrefecturesRepository.getPrefectures()
       responsePref.data.forEach(item => {
-        this.prefItems.push(item.attributes.prefecture)
+        let obj = {
+          value: item.attributes.id,
+          text: item.attributes.prefecture
+        }
+        this.prefItems.push(obj)
       })
     },
     changePage: async function(pageNumber) {
@@ -100,15 +111,22 @@ export default {
       this.$parent.actors = data
       this.$parent.pagination = meta.pagination
     },
+    // 検索フォームの条件変更を検知して、vuexの値を更新する
+    updated: function(values, label) {
+      console.log(values)
+      console.log(label)
+      this.$store.commit("actors/updateSearchValues", {
+        values: values,
+        label: label
+      })
+    },
     testFunc: async function() {
       // 業種と都道府県情報を持ってくる
-      // console.log(this.typeItems)
-      // console.log(this.typeValue)
       console.log("test")
       let { data, meta } = await ActorsRepository.getActors(
         1,
-        this.typeValue,
-        this.prefValue
+        this.searchValues.typeValue,
+        this.searchValues.prefValue
       )
       this.$parent.actors = data
       this.$parent.pagination = meta.pagination
