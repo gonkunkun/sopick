@@ -1,6 +1,11 @@
 <template>
   <v-row>
-    <select-chips label="業種" :items="typeItems" :values="typeValue" />
+    <select-chips
+      label="業種"
+      :items="typeItems"
+      :values="typeValue"
+      @update="handler"
+    />
     <select-chips label="都道府県" :items="prefItems" :values="prefValue" />
   </v-row>
 </template>
@@ -33,7 +38,8 @@ export default {
   },
   data: function() {
     return {}
-  }
+  },
+  method: {}
 }
 </script>
 <style scoped></style>

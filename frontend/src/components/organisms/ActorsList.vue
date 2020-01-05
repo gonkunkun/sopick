@@ -2,6 +2,9 @@
   <v-container>
     <title-text text="キャスト一覧" />
     <!-- 検索機能追加 -->
+    <v-btn @click="testFunc()">
+      test
+    </v-btn>
     <search-forms
       :type-items="typeItems"
       :type-value="typeValue"
@@ -94,6 +97,19 @@ export default {
     },
     changePage: async function(pageNumber) {
       let { data, meta } = await ActorsRepository.getActors(pageNumber)
+      this.$parent.actors = data
+      this.$parent.pagination = meta.pagination
+    },
+    testFunc: async function() {
+      // 業種と都道府県情報を持ってくる
+      // console.log(this.typeItems)
+      // console.log(this.typeValue)
+      console.log("test")
+      let { data, meta } = await ActorsRepository.getActors(
+        1,
+        this.typeValue,
+        this.prefValue
+      )
       this.$parent.actors = data
       this.$parent.pagination = meta.pagination
     }

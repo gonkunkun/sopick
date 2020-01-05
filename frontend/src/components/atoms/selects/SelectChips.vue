@@ -33,6 +33,11 @@ export default {
       selectItems: this.items,
       selectValue: this.values
     }
+  },
+  watch: {
+    // selectValue: function(newVal) {
+    // this.$emit("update", newVal)
+    // }
   }
 }
 </script>
