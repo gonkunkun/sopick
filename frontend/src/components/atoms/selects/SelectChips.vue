@@ -7,6 +7,7 @@
       chips
       :label="label"
       multiple
+      @input="updateValue"
     />
   </v-col>
 </template>
@@ -34,10 +35,10 @@ export default {
       selectValue: this.values
     }
   },
-  watch: {
-    // selectValue: function(newVal) {
-    // this.$emit("update", newVal)
-    // }
+  methods: {
+    updateValue: function(event) {
+      this.$emit("updated", event, this.label)
+    }
   }
 }
 </script>

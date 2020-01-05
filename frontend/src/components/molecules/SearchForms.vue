@@ -4,9 +4,14 @@
       label="業種"
       :items="typeItems"
       :values="typeValue"
-      @update="handler"
+      @updated="updated"
     />
-    <select-chips label="都道府県" :items="prefItems" :values="prefValue" />
+    <select-chips
+      label="都道府県"
+      :items="prefItems"
+      :values="prefValue"
+      @updated="updated"
+    />
   </v-row>
 </template>
 
@@ -39,7 +44,11 @@ export default {
   data: function() {
     return {}
   },
-  method: {}
+  methods: {
+    updated: function(event, label) {
+      this.$emit("updated", event, label)
+    }
+  }
 }
 </script>
 <style scoped></style>
