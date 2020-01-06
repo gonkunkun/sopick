@@ -1,4 +1,11 @@
-require("dotenv").config()
+const path = require('path')
+const fs = require('fs')
+const env = process.env.NODE_ENV
+const envPath = path.resolve(process.cwd(), `.env.${env}`)
+const defaultEnvPath = path.resolve(process.cwd(), '.env')
+require('dotenv').config({
+  path: fs.existsSync(envPath) ? envPath : defaultEnvPath,
+})
 
 export default {
   mode: "universal",
@@ -46,14 +53,15 @@ export default {
     /* module options */
   },
   /*
-   ** Nuxt.js modules
+  ** Nuxt.js modules
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     "@nuxtjs/axios",
     "@nuxtjs/dotenv",
     "@nuxtjs/proxy",
-    "@nuxtjs/vuetify"
+    // "@nuxtjs/vuetify",
+    "@nuxtjs/dotenv"
   ],
   env: {
     BASE_URL: process.env.API_URL
@@ -63,7 +71,7 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: process.env.BASE_URL
+  baseURL: process.env.BASE_URL
   },
   router: {
     middleware: ["auth-cookie"]

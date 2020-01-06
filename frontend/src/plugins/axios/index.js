@@ -10,7 +10,7 @@ export default function({ $axios }) {
   })
 
   $axios.onResponse(response => {
-    $axios.setHeader("Access-Control-Allow-Origin", "http://localhost:3031")
+    $axios.setHeader("Access-Control-Allow-Origin", process.env.BASE_URL)
     return Promise.resolve(response)
   })
 
