@@ -42,9 +42,9 @@ services:
     build:
       context: .
       dockerfile: ./etc/docker/frontend/Dockerfile
-      target: development-stage
-    volumes:
-      - ./frontend:/app
+      target: production-stage
+    # volumes:
+    #   - ./frontend:/app
     environment:
       PORT: 3333
       HOST: 0.0.0.0
