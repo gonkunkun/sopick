@@ -6,5 +6,4 @@ Rails.application.routes.draw do
   resources :prefectures, only: [:index]
 
   get "healthcheck", to: "samples#healthcheck"
-  get "healthcheckWithAuth", to: "samples#healthcheckWithAuth"
 end
